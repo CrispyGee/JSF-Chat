@@ -1,4 +1,5 @@
 .idea
 .settings
 .buildpath
+.giti.txt
 target/
