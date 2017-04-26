@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 
 <h:head>
-	<title>JSF 2.0 Hello World</title>
+<!-- Latest compiled and minified CSS -->
+<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+	<f:metadata>
+		<f:viewParam name="username" value="#{messageBean.username}" />
+		<f:viewAction action="#{messageBean.initUser}" />
+	</f:metadata>
+	<title>JSF 2.0 Chat Application</title>
 </h:head>
 <h:body>
-	<h3>Chat</h3>
+	<h2>Chat</h2>
+	<h4>Eingeloggt als #{messageBean.username}</h4>
+	<ui:repeat value="#{messageBean.messages}" var="message">
+		<div>#{message.sender.username}: #{message.content}, <i>#{messageBean.formatDate(message.timestamp)}, #{message.messageState}</i></div>
+	</ui:repeat>
 	<h:form>
-		<h:inputText value="#{helloBean.name}"></h:inputText>
-		<h:commandButton value="Welcome Me" action="welcome"></h:commandButton>
+		<h:inputText value="#{messageBean.messageContent}"></h:inputText>
+		<h:commandButton value="Senden" actionListener="#{messageBean.send}"></h:commandButton>
 	</h:form>
 </h:body>
 </html>
