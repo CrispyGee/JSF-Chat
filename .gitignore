@@ -6,3 +6,5 @@ target/
 bin/
 .classpath
 .project
+JSFChat*
+src/main/resources

@@ -1,36 +1,72 @@
 package de.hfu.util;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
-//import com.google.firebase.FirebaseApp;
-//import com.google.firebase.FirebaseOptions;
-//import com.google.firebase.auth.FirebaseCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseCredentials;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import de.hfu.DAO.User;
 
 public class FirebaseStarter {
 	
-//	<script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
-//	<script>
-//	  // Initialize Firebase
-//	  var config = {
-//	    apiKey: "AIzaSyD05KgbHwWb8_P415UFzsytFE8NruPZ7PY",
-//	    authDomain: "jsfchat.firebaseapp.com",
-//	    databaseURL: "https://jsfchat.firebaseio.com",
-//	    projectId: "jsfchat",
-//	    storageBucket: "jsfchat.appspot.com",
-//	    messagingSenderId: "560069890081"
-//	  };
-//	  firebase.initializeApp(config);
-//	</script>
 	
-	public static void main(String[] args) throws Exception {
-		FileInputStream serviceAccount = new FileInputStream("path/to/serviceAccountKey.json");
+	public FirebaseStarter() {
+		FileInputStream serviceAccount;
+		try {
+			serviceAccount = new FileInputStream("src/main/resources/JSFChat-3a2ee200916b.json");
+			FirebaseOptions options = new FirebaseOptions.Builder()
+					.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+					.setDatabaseUrl("https://jsfchat.firebaseio.com/").build();
+			//
+			FirebaseApp.initializeApp(options);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void saveUser(User user){
+		DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").push();
+		ref.setValue(user);
+	}
+	
+	public void listen(){
+		DatabaseReference ref = FirebaseDatabase.getInstance().getReference("top");
+		ref.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				User user = dataSnapshot.getValue(User.class);
+				System.out.println(user);
+				System.out.println(user.getFirstname());
+				System.out.println(user.getLastname());
+			}
 
-//		FirebaseOptions options = new FirebaseOptions.Builder()
-//		  .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
-//		  .setDatabaseUrl("https://jsfchat.firebaseio.com/")
-//		  .build();
-//
-//		FirebaseApp.initializeApp(options);
+			@Override
+			public void onCancelled(DatabaseError er) {
+				System.out.println(er);
+			}
+		});
+
+	}
+	
+	public void setObjectToPath(Object object, String path){
+	}
+
+	public static void main(String[] args) throws Exception {
+		FirebaseStarter firebaseStarter = new FirebaseStarter();
+		User user = new User();
+		user.setFirstname("soph");
+		user.setLastname("lebof");
+		firebaseStarter.saveUser(user);
+		firebaseStarter.saveUser(user);
+		Thread.sleep(1000);
 	}
 
 }
