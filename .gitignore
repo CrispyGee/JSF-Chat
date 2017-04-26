@@ -3,3 +3,6 @@
 .buildpath
 .giti.txt
 target/
+bin/
+.classpath
+.project
