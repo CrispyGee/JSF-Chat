@@ -51,6 +51,8 @@ public class MessageBean implements Serializable {
 			this.chat = currentChat;
 			this.chat = FirebaseStarter.getInstance().loadChat(this.chat.getId());
 			this.messages = chat.getMessages();
+		} else {
+			//this.chat = new Chat(); //TODO: HIER MUSS N CHAT ERSTELLT WERDEn
 		}
 		// TODO if no user redirect
 	}
@@ -63,6 +65,7 @@ public class MessageBean implements Serializable {
 	public void send(ActionEvent e) {
 		Message message = new Message(this.user.getUsername(), this.messageContent);
 		this.messages.add(message);
+		FirebaseStarter.getInstance().sendMessage(this.chat.getId(),this.messageContent, this.user.getUsername());
 		this.messageContent = "";
 	}
 
