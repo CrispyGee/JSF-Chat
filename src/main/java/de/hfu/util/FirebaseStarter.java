@@ -145,7 +145,7 @@ public class FirebaseStarter {
 		return usersFiltered;
 	}
 
-	public String createChat(String user1, String user2) {
+	public Chat createChat(String user1, String user2) {
 		String chatId = UUID.randomUUID().toString();
 		DatabaseReference user1Ref = FirebaseDatabase.getInstance().getReference("users/" + user1 + "/chats");
 		DatabaseReference user2Ref = FirebaseDatabase.getInstance().getReference("users/" + user2 + "/chats");
@@ -161,7 +161,7 @@ public class FirebaseStarter {
 		chat.setParticipants(participants);
 		chat.setTimestamp(System.currentTimeMillis());
 		chatRef.setValue(chat);
-		return chatId;
+		return chat;
 	}
 
 	public boolean sendMessage(String chatId, String content, String sender) {
