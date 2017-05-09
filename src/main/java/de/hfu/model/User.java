@@ -74,4 +74,12 @@ public class User implements Serializable {
     public void setOpenChats(List<Chat> openChats) {
         this.openChats = openChats;
     }
+
+	@Override
+	public String toString() {
+		return "User [firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", password="
+				+ password + ", onlineState=" + onlineState + ", openChats=" + openChats + "]";
+	}
+    
+    
 }

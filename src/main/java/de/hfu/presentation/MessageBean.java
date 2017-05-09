@@ -49,7 +49,7 @@ public class MessageBean implements Serializable {
 	 * @param e
 	 */
 	public void send(ActionEvent e) {
-		Message message = new Message(this.user, this.messageContent);
+		Message message = new Message(this.user.getUsername(), this.messageContent);
 		this.messages.add(message);
 	}
 

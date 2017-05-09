@@ -1,19 +1,10 @@
 package de.hfu.presentation;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.concurrent.Semaphore;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
 
 import de.hfu.model.User;
 import de.hfu.util.FirebaseStarter;

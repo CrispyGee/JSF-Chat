@@ -1,14 +1,12 @@
 package de.hfu.model;
 
-import java.text.SimpleDateFormat;
-
 /**
  * Created by IMTT on 12.04.2017.
  */
 public class Message {
 
     private String content;
-    private User sender;
+    private String sender;
     private MessageState messageState;
     private long timestamp;
     
@@ -17,7 +15,7 @@ public class Message {
     	this.messageState = MessageState.sent;
     }
     
-    public Message(User sender, String content){
+    public Message(String sender, String content){
     	this.timestamp = System.currentTimeMillis();
     	this.messageState = MessageState.sent;
     	this.sender = sender;
@@ -32,11 +30,11 @@ public class Message {
         this.content = content;
     }
 
-    public User getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(User sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
@@ -55,5 +53,13 @@ public class Message {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
+	@Override
+	public String toString() {
+		return "Message [content=" + content + ", sender=" + sender + ", messageState=" + messageState + ", timestamp="
+				+ timestamp + "]";
+	}
+    
+    
     
 }
