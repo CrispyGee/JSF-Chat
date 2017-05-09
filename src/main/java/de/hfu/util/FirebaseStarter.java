@@ -64,11 +64,6 @@ public class FirebaseStarter {
 		return success[0];
 	}
 
-	public void checkRegister(final User user, ValueEventListener registerEvent) {
-		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/");
-		ref.addListenerForSingleValueEvent(registerEvent);
-	}
-
 	public boolean register(final User user) {
 		final Semaphore semaphore = new Semaphore(0);
 		final boolean success[] = { false };
@@ -100,16 +95,7 @@ public class FirebaseStarter {
 		}
 		return success[0];
 	}
-
-	public static void main(String[] args) throws Exception {
-		FirebaseStarter firebaseStarter = new FirebaseStarter();
-		User user = new User();
-		user.setFirstname("max");
-		user.setLastname("mustermann");
-		user.setUsername("unique");
-		user.setPassword("1234");
-		firebaseStarter.register(user);
-		Thread.sleep(1000);
-	}
+	
+	
 
 }

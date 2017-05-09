@@ -52,9 +52,9 @@ public class LoginRegisterBean implements Serializable {
 	public String register() throws Exception {
 		final User user = new User(firstname, lastname, registerName, registerPassword);
 		if (firebaseStarter.register(user)) {
-			this.registerText = "SUCCES";
+			this.registerText = "Erfolgreich registriert!";
 		} else {
-			this.registerText = "FAIL";
+			this.registerText = "Registrierung fehlgeschlagen: Accountname schon vergeben";
 		}
 		return null;
 	}
@@ -63,7 +63,7 @@ public class LoginRegisterBean implements Serializable {
 		if (firebaseStarter.login(loginName, loginPassword)) {
 			return "/chat.xhtml?faces-redirect=true&username=" + loginName;
 		} else {
-			loginText = "Wrong Login Credentials";
+			loginText = "Login fehlgeschlagen: Ungültige Anmeldedaten";
 			return null;
 		}
 	}
