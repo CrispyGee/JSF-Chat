@@ -1,11 +1,12 @@
 package de.hfu.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by IMTT on 12.04.2017.
  */
-public class Chat {
+public class Chat implements Serializable{
 
 	private String name;
 	private String id;
