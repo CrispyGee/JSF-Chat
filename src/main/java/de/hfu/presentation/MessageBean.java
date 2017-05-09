@@ -8,10 +8,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import de.hfu.model.Chat;
 import de.hfu.model.Message;
 import de.hfu.model.User;
+import de.hfu.util.FirebaseStarter;
 
 @ManagedBean
 @SessionScoped
@@ -23,6 +26,7 @@ public class MessageBean implements Serializable {
 	private User user;
 	private String messageContent;
 	private List<Message> messages;
+	private Chat chat;
 
 	/**
 	 * initializes Bean with necessary objects (nearly same as a constructor)
@@ -36,10 +40,12 @@ public class MessageBean implements Serializable {
 	/**
 	 * initializes User object using request parameter on page load
 	 */
-	public void initUser() {
-		System.out.println("initUser with " + this.username);
-		this.user = new User();
-		this.user.setUsername(this.username);
+	public void initChatroom() {
+		this.user = ((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
+		this.username = this.user.getUsername();
+		this.chat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
+		this.chat = FirebaseStarter.getInstance().loadChat(this.chat.getId());
+		this.messages = chat.getMessages();
 		//TODO if no user redirect
 	}
 

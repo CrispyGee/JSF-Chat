@@ -18,13 +18,11 @@ import de.hfu.util.FirebaseStarter;
 public class ChatSelectionBean implements Serializable {
 	private User user;
 	private List<Chat> chats;
-	private FirebaseStarter firebaseStarter;
 
 	public void initChats() {
 		System.out.println("initializing ChatSelectionBean with init");
-		this.firebaseStarter = FirebaseStarter.getInstance();
 		this.setUser((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
-		this.chats = this.firebaseStarter.loadChatList(this.user.getUsername());
+		this.chats = FirebaseStarter.getInstance().loadChatList(this.user.getUsername());
 		System.out.println("LEL");
 		System.out.println(this.chats);
 		System.out.println(this.user.getUsername());
@@ -57,6 +55,14 @@ public class ChatSelectionBean implements Serializable {
 	public String redirectToUserView() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
 		return "/users.xhtml?faces-redirect=true";
+	}
+
+	public String showChat(Chat chat) {
+		System.out.println("______________________________-");
+		System.out.println(this.user);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", this.user);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("chat", chat);
+		return "/chat.xhtml?faces-redirect=true";
 	}
 
 	public List<Chat> getChats() {

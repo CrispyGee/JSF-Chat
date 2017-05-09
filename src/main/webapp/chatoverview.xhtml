@@ -34,14 +34,17 @@
 	<ui:repeat value="#{chatSelectionBean.chats}" var="chat">
 		<b:panel>
 			<f:facet name="heading">
-				<i class="fa fa-battery-three-quarters" style="padding-right: 20px" />
+				<i class="glyphicon glyphicon-envelope" style="padding-right: 20px" />
 				<h:outputText value="#{chatSelectionBean.otherUser(chat)}" />
 			</f:facet>
 			<h:outputText value="#{chatSelectionBean.displayMessage(chat)}" />
 			<br />
 			<h:outputText value="#{chatSelectionBean.displayTimestamp(chat)}" />
+			<b:form>
+				<b:commandButton value="Gehe zum Chat"
+					action="#{chatSelectionBean.showChat(chat)}" look="primary" style ="float: right"></b:commandButton>
+			</b:form>
 		</b:panel>
-		<div>#{chat}</div>
 		<br />
 	</ui:repeat>
 
