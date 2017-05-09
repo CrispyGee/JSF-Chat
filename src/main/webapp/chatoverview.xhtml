@@ -19,21 +19,26 @@
 </h:head>
 <h:body>
 	<h4>Eingeloggt als #{chatSelectionBean.user.username}</h4>
-	<a class="btn icon-btn btn-success" href="#"> <span
-		class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
+	<h:form>
+		<b:commandButton action="#{chatSelectionBean.redirectToUserView()}"
+			class="btn icon-btn btn-success" href="#">
+			<span
+				class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
 		Neuer Chat
-	</a>
-	<a class="btn icon-btn btn-info" href="#"> <span
-		class="glyphicon btn-glyphicon glyphicon-share img-circle text-info"></span>
-		Neues Bild
-	</a>
+	</b:commandButton>
+		<a class="btn icon-btn btn-info" href="#"> <span
+			class="glyphicon btn-glyphicon glyphicon-share img-circle text-info"></span>
+			Neues Bild
+		</a>
+	</h:form>
 	<ui:repeat value="#{chatSelectionBean.chats}" var="chat">
 		<b:panel>
 			<f:facet name="heading">
 				<i class="fa fa-battery-three-quarters" style="padding-right: 20px" />
 				<h:outputText value="#{chatSelectionBean.otherUser(chat)}" />
 			</f:facet>
-			<h:outputText value="#{chatSelectionBean.displayMessage(chat)}" /> <br/>
+			<h:outputText value="#{chatSelectionBean.displayMessage(chat)}" />
+			<br />
 			<h:outputText value="#{chatSelectionBean.displayTimestamp(chat)}" />
 		</b:panel>
 		<div>#{chat}</div>

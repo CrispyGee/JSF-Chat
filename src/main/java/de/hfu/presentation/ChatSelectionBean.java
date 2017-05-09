@@ -12,7 +12,6 @@ import de.hfu.model.Chat;
 import de.hfu.model.User;
 import de.hfu.util.FirebaseStarter;
 
-
 @SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
@@ -30,41 +29,48 @@ public class ChatSelectionBean implements Serializable {
 		System.out.println(this.chats);
 		System.out.println(this.user.getUsername());
 	}
-	
-	public String displayMessage(Chat chat){
-		if (chat.getMessages()!=null){
+
+	public String displayMessage(Chat chat) {
+		if (chat.getMessages() != null) {
 			return chat.getMessages().get(0).getContent();
-		}
-		else return "";
+		} else
+			return "";
 	}
-	
-	public String displayTimestamp(Chat chat){
-		if (chat.getMessages()!=null){
+
+	public String displayTimestamp(Chat chat) {
+		if (chat.getMessages() != null) {
 			SimpleDateFormat df = new SimpleDateFormat("HH:mm dd:MM:yyyy");
 			return df.format(chat.getMessages().get(0).getTimestamp());
-		}
-		else return "";
+		} else
+			return "";
 	}
-	
-	public String otherUser(Chat chat){
-		for (String participant :chat.getParticipants()){
-			if (!participant.equals(user.getUsername())){
+
+	public String otherUser(Chat chat) {
+		for (String participant : chat.getParticipants()) {
+			if (!participant.equals(user.getUsername())) {
 				return participant;
 			}
 		}
 		return "";
 	}
-	
+
+	public String redirectToUserView() {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
+		return "/users.xhtml?faces-redirect=true";
+	}
+
 	public List<Chat> getChats() {
 		return chats;
 	}
+
 	public void setChats(List<Chat> chats) {
 		this.chats = chats;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}

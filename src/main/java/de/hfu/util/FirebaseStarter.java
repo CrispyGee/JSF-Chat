@@ -21,11 +21,11 @@ import de.hfu.model.Message;
 import de.hfu.model.User;
 
 public class FirebaseStarter {
-	
+
 	private static FirebaseStarter singleton;
-	
-	public static FirebaseStarter getInstance(){
-		if(singleton == null){
+
+	public static FirebaseStarter getInstance() {
+		if (singleton == null) {
 			FirebaseStarter.singleton = new FirebaseStarter();
 		}
 		return singleton;
@@ -35,8 +35,8 @@ public class FirebaseStarter {
 		FileInputStream serviceAccount;
 		try {
 			serviceAccount = new FileInputStream(
-					"C://Users/Christian/workspace/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
-//					"C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
+					// "C://Users/Christian/workspace/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
+					"C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
 					.setDatabaseUrl("https://jsfchat.firebaseio.com/").build();
@@ -109,7 +109,7 @@ public class FirebaseStarter {
 		return success[0];
 	}
 
-	public List<User> loadUserList() {
+	public List<User> loadUserList(List<String> filterUsers) {
 		final Semaphore semaphore = new Semaphore(0);
 		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/");
 		final List<User> users = new ArrayList<>();
@@ -135,7 +135,13 @@ public class FirebaseStarter {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return users;
+		final List<User> usersFiltered = new ArrayList<>();
+		for (User user : users) {
+			if (!filterUsers.contains(user.getUsername())) {
+				usersFiltered.add(user);
+			}
+		}
+		return usersFiltered;
 	}
 
 	public String createChat(String user1, String user2) {
@@ -305,7 +311,7 @@ public class FirebaseStarter {
 	}
 
 	public static void main(String[] args) throws Exception {
-		 FirebaseStarter fb = new FirebaseStarter();
+		FirebaseStarter fb = new FirebaseStarter();
 		// fb.register(new User("a", "a", "a", "a"));
 		// fb.register(new User("b", "b", "b", "b"));
 		// fb.register(new User("c", "c", "c", "c"));
@@ -328,7 +334,10 @@ public class FirebaseStarter {
 		// for (Chat chat : chats_a_2) {
 		// System.out.println(chat);
 		// }
-		List<User> users = fb.loadUserList();
+		List<String> filter = new ArrayList<>();
+		filter.add("a");
+		filter.add("b");
+		List<User> users = fb.loadUserList(filter);
 		System.out.println(users);
 		System.exit(0);
 	}
