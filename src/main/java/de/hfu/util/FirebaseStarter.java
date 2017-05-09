@@ -38,16 +38,16 @@ public class FirebaseStarter {
 
 	}
 
-	public boolean login(String username, final String password) {
+	public User login(String username, final String password) {
 		final Semaphore semaphore = new Semaphore(0);
-		final boolean success[] = { false };
+		final User userBack[] = { new User() };
 		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + username + "/user");
 		ref.addListenerForSingleValueEvent(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot snap) {
 				try {
 					User user = snap.getValue(User.class);
-					success[0] = (user.getPassword().equals(password));
+					userBack[0] = user;
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
@@ -65,7 +65,7 @@ public class FirebaseStarter {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return success[0];
+		return userBack[0];
 	}
 
 	public boolean register(final User user) {
