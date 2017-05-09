@@ -35,7 +35,7 @@ public class UserBean implements Serializable {
 		// TODO fix this bs
 		Thread.sleep(1000);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", this.user);
-		return "/chatoverview.xhtml?faces-redirect=true";
+		return "/chat.xhtml?faces-redirect=true";
 	}
 
 	public List<User> getUsers() {
