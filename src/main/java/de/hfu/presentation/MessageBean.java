@@ -51,6 +51,7 @@ public class MessageBean implements Serializable {
 	public void send(ActionEvent e) {
 		Message message = new Message(this.user.getUsername(), this.messageContent);
 		this.messages.add(message);
+		this.messageContent = "";
 	}
 
 	public List<Message> getMessages() {
