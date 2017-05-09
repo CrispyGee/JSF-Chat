@@ -1,7 +1,71 @@
 package de.hfu.presentation;
 
-public class ChatSelectionBean {
-	
-	
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+import de.hfu.model.Chat;
+import de.hfu.model.User;
+import de.hfu.util.FirebaseStarter;
+
+
+@SuppressWarnings("serial")
+@ManagedBean
+@SessionScoped
+public class ChatSelectionBean implements Serializable {
+	private User user;
+	private List<Chat> chats;
+	private FirebaseStarter firebaseStarter;
+
+	public void initChats() {
+		System.out.println("initializing ChatSelectionBean with init");
+		this.firebaseStarter = FirebaseStarter.getInstance();
+		this.setUser((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
+		this.chats = this.firebaseStarter.loadChatList(this.user.getUsername());
+		System.out.println("LEL");
+		System.out.println(this.chats);
+		System.out.println(this.user.getUsername());
+	}
+	
+	public String displayMessage(Chat chat){
+		if (chat.getMessages()!=null){
+			return chat.getMessages().get(0).getContent();
+		}
+		else return "";
+	}
+	
+	public String displayTimestamp(Chat chat){
+		if (chat.getMessages()!=null){
+			SimpleDateFormat df = new SimpleDateFormat("HH:mm dd:MM:yyyy");
+			return df.format(chat.getMessages().get(0).getTimestamp());
+		}
+		else return "";
+	}
+	
+	public String otherUser(Chat chat){
+		for (String participant :chat.getParticipants()){
+			if (!participant.equals(user.getUsername())){
+				return participant;
+			}
+		}
+		return "";
+	}
+	
+	public List<Chat> getChats() {
+		return chats;
+	}
+	public void setChats(List<Chat> chats) {
+		this.chats = chats;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

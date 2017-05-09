@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import de.hfu.model.User;
 import de.hfu.util.FirebaseStarter;
@@ -37,7 +38,7 @@ public class LoginRegisterBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		System.out.println("initializing LoginRegisterBean with init");
-		this.firebaseStarter = new FirebaseStarter();
+		this.firebaseStarter = FirebaseStarter.getInstance();
 	}
 
 	public String register() throws Exception {
@@ -51,8 +52,10 @@ public class LoginRegisterBean implements Serializable {
 	}
 	
 	public String login() {
-		if (firebaseStarter.login(loginName, loginPassword)) {
-			return "/chat.xhtml?faces-redirect=true&username=" + loginName;
+		User user = firebaseStarter.login(loginName, loginPassword);
+		if (user.getUsername()!=null) {
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
+			return "/chatoverview.xhtml?faces-redirect=true";
 		} else {
 			loginText = "Login fehlgeschlagen: Ungültige Anmeldedaten";
 			return null;
