@@ -20,64 +20,34 @@
 </h:head>
 <h:body>
 	<h4>Eingeloggt als #{messageBean.username}</h4>
-	<a class="btn icon-btn btn-success" href="#"> <span
-		class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
-		Neuer Chat
-	</a>
 	<b:form>
-		<b:carousel id="chat"
-			style="width:900px; padding-top:10px; padding-bottom:20px"
+		<b:carousel id="chat" style="width:900px; padding-top:10px"
 			startAnimation="false" showIndicators="false" wrap="false">
-			<b:carouselItem style="width:900px; height:900px; overflow-y: auto; max-height: 900px">
-				<b:panel title="Chat" look="primary">
-					<ui:repeat value="#{messageBean.messages}" var="message">
+			<b:carouselItem
+				style="width:900px; height:600px; overflow-y: auto; max-height: 900px">
+				<b:panel title="Chat mit #{messageBean.otherUsername}"
+					look="primary">
+					<ui:repeat value="#{messageBean.chat.getMessages()}" var="message">
 						<div class="panel-body msg_container_base">
 							<div class="row msg_container base_sent">
 								<div class="col-md-10 col-xs-10">
 									<div>
-										<p style="word-wrap: break-word;">
-											#{message.content}, <i>
-												#{message.messageState}</i>
-										</p>
+										<p style="word-wrap: break-word;">#{message.content}</p>
 									</div>
 								</div>
 								<div class="col-md-2 col-xs-2">
 									<img
 										src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
 										class=" img-responsive " />
-										<p>
-										#{message.sender} <br/>#{messageBean.formatDate(message.timestamp)}<br/>
-										</p>
+									<p>
+										#{message.sender} <br />#{messageBean.formatDate(message.timestamp)}<br />
+									</p>
 								</div>
 
 							</div>
 						</div>
 						<br />
 					</ui:repeat>
-					<div class="panel-footer">
-						<div class="input-group">
-							<b:inputText label="" value="#{messageBean.messageContent}"
-								placeholder="Nachricht eingeben..."
-								class="form-control input-sm chat_input" />
-							<span class="input-group-btn"> <b:commandButton
-									value="Senden" class="btn btn-primary btn-sm"
-									actionListener="#{messageBean.send}" look="primary"></b:commandButton>
-							</span>
-						</div>
-					</div>
-					<br />
-					<button class="bg_none">
-						<i class="glyphicon glyphicon-film"></i>
-					</button>
-					<button class="bg_none">
-						<i class="glyphicon glyphicon-camera"></i>
-					</button>
-					<button class="bg_none">
-						<i class="glyphicon glyphicon-paperclip"></i>
-					</button>
-					<button class="bg_none pull-right">
-						<i class="glyphicon glyphicon-thumbs-up"></i>
-					</button>
 				</b:panel>
 			</b:carouselItem>
 			<b:carouselControl direction="right">
@@ -85,6 +55,30 @@
 			<b:carouselControl direction="left">
 			</b:carouselControl>
 		</b:carousel>
+		<div class="panel-footer" style="width: 900px;">
+			<div class="input-group">
+				<b:inputText label="" value="#{messageBean.messageContent}"
+					placeholder="Nachricht eingeben..."
+					class="form-control input-sm chat_input" />
+				<span class="input-group-btn"> <b:commandButton
+						value="Senden" class="btn btn-primary btn-sm"
+						actionListener="#{messageBean.send}" look="primary"></b:commandButton>
+				</span>
+			</div>
+		</div>
+		<br />
+		<!-- <button class="bg_none">
+			<i class="glyphicon glyphicon-film"></i>
+		</button>
+		<button class="bg_none">
+			<i class="glyphicon glyphicon-camera"></i>
+		</button>
+		<button class="bg_none">
+			<i class="glyphicon glyphicon-paperclip"></i>
+		</button>
+		<button class="bg_none pull-right">
+			<i class="glyphicon glyphicon-thumbs-up"></i>
+		</button> -->
 	</b:form>
 </h:body>
 </html>

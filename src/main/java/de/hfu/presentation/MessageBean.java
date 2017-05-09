@@ -2,7 +2,6 @@ package de.hfu.presentation;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -25,8 +24,16 @@ public class MessageBean implements Serializable {
 	private String username;
 	private User user;
 	private String messageContent;
-	private List<Message> messages;
 	private Chat chat;
+	private String otherUsername;
+
+	public String getOtherUsername() {
+		return otherUsername;
+	}
+
+	public void setOtherUsername(String otherUsername) {
+		this.otherUsername = otherUsername;
+	}
 
 	/**
 	 * initializes Bean with necessary objects (nearly same as a constructor)
@@ -34,7 +41,6 @@ public class MessageBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		System.out.println("initializing MessageBean with init");
-		this.messages = new ArrayList<Message>();
 	}
 
 	/**
@@ -50,10 +56,10 @@ public class MessageBean implements Serializable {
 		if (currentChat != null) {
 			this.chat = currentChat;
 			this.chat = FirebaseStarter.getInstance().loadChat(this.chat.getId());
-			this.messages = chat.getMessages();
 		} else {
 			//this.chat = new Chat(); //TODO: HIER MUSS N CHAT ERSTELLT WERDEn
 		}
+		this.otherUsername = getOtherUser(this.chat.getParticipants());
 		// TODO if no user redirect
 	}
 
@@ -64,17 +70,9 @@ public class MessageBean implements Serializable {
 	 */
 	public void send(ActionEvent e) {
 		Message message = new Message(this.user.getUsername(), this.messageContent);
-		this.messages.add(message);
+		this.chat.getMessages().add(message);
 		FirebaseStarter.getInstance().sendMessage(this.chat.getId(),this.messageContent, this.user.getUsername());
 		this.messageContent = "";
-	}
-
-	public List<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
 	}
 
 	public String getMessageContent() {
@@ -93,9 +91,25 @@ public class MessageBean implements Serializable {
 		this.username = username;
 	}
 
+	public Chat getChat() {
+		return chat;
+	}
+
+	public void setChat(Chat chat) {
+		this.chat = chat;
+	}
+
 	public String formatDate(long timestamp) {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 		return df.format(timestamp);
+	}
+	private String getOtherUser(List<String> participants) {
+		for (String participant : participants) {
+			if (!participant.equals(user.getUsername())) {
+				return participant;
+			}
+		}
+		return "";
 	}
 
 }
