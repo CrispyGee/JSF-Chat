@@ -4,28 +4,65 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
 	<title>JSF Chat - Login</title>
 </h:head>
 <h:body bgcolor="white">
-	<h3>JSF Chat - Login</h3>
-	<h:form>
-	    <h:outputText value="#{loginRegisterBean.loginText}" />
-		<h:inputText value="#{loginRegisterBean.loginName}"></h:inputText>
-		<h:inputText value="#{loginRegisterBean.loginPassword}"></h:inputText>
-		<h:commandButton value="Einloggen" action="#{loginRegisterBean.login}"></h:commandButton>
-	</h:form>
-	<h4>Register</h4>
-	<h:form>
-		<h:outputText value="#{loginRegisterBean.registerText}" />
-		<h:inputText value="#{loginRegisterBean.registerName}"></h:inputText>
-		<h:inputText value="#{loginRegisterBean.registerPassword}"></h:inputText>
-		<h:inputText value="#{loginRegisterBean.firstname}"></h:inputText>
-		<h:inputText value="#{loginRegisterBean.lastname}"></h:inputText>
-		<h:commandButton value="Registrieren"
-			action="#{loginRegisterBean.register}"></h:commandButton>
-	</h:form>
+	<h3>JSF Chat</h3>
+	<b:form>
+		<div>#{loginRegisterBean.loginText}</div>
+		<b:carousel id="login"
+			style="width:400px; padding-top:10px; padding-bottom:20px"
+			startAnimation="false" showIndicators="false" wrap="false">
+			<b:carouselItem style="width:400px; height:300px">
+				<b:panel title="Login" look="primary">
+					<b:inputText label="Benutzername"
+						value="#{loginRegisterBean.loginName}" required="true"
+						requiredMessage="Bitte geben Sie einen Benutzernamen ein" />
+					<b:inputText label="Passwort"
+						value="#{loginRegisterBean.loginPassword}" required="true"
+						requiredMessage="Bitte geben Sie ein Passwort ein" />
+					<b:commandButton value="Einloggen"
+						action="#{loginRegisterBean.login}" look="primary"></b:commandButton>
+				</b:panel>
+			</b:carouselItem>
+			<b:carouselControl direction="right">
+			</b:carouselControl>
+			<b:carouselControl direction="left">
+			</b:carouselControl>
+		</b:carousel>
+	</b:form>
+
+	<b:form>
+		<div>#{loginRegisterBean.registerText}</div>
+		<b:carousel id="register"
+			style="width:400px; padding-top:10px; padding-bottom:20px"
+			startAnimation="false" showIndicators="false" wrap="false">
+			<b:carouselItem style="width:400px; height:500px">
+				<b:panel title="Registrieren" look="danger">
+					<b:inputText label="Benutzername"
+						value="#{loginRegisterBean.registerName}" required="true"
+						requiredMessage="Bitte geben Sie einen Benutzernamen ein" />
+					<b:inputText label="Passwort"
+						value="#{loginRegisterBean.registerPassword}" required="true"
+						requiredMessage="Bitte geben Sie ihr Passswort ein" />
+					<b:inputText label="Vorname" value="#{loginRegisterBean.firstname}"
+						required="true"
+						requiredMessage="Bitte geben Sie einen Vornamen ein" />
+					<b:inputText label="Benutzername"
+						value="#{loginRegisterBean.lastname}" required="true"
+						requiredMessage="Bitte geben Sie einen Nachnamen ein" />
+					<b:commandButton value="Registrieren"
+						action="#{loginRegisterBean.register}" look="danger"></b:commandButton>
+				</b:panel>
+			</b:carouselItem>
+			<b:carouselControl direction="right">
+			</b:carouselControl>
+			<b:carouselControl direction="left">
+			</b:carouselControl>
+		</b:carousel>
+	</b:form>
 </h:body>
 </html>
