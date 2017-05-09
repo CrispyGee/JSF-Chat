@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import de.hfu.model.Chat;
 import de.hfu.model.User;
 import de.hfu.util.FirebaseStarter;
 
@@ -26,8 +27,27 @@ public class UserBean implements Serializable {
 		}
 		List<String> filter = new ArrayList<>();
 		filter.add(this.user.getUsername());
+		filter.addAll(getChatPartners(user.getUsername()));
 		this.users = FirebaseStarter.getInstance().loadUserList(filter);
 
+	}
+
+	private List<String> getChatPartners(String username) {
+		List<Chat> chats = FirebaseStarter.getInstance().loadChatList(username);
+		List<String> chatPartners = new ArrayList<>();
+		for (Chat chat : chats) {
+			chatPartners.add(getOtherUser(chat.getParticipants()));
+		}
+		return chatPartners;
+	}
+	
+	private String getOtherUser(List<String> participants){
+		for (String participant : participants) {
+			if (!participant.equals(user.getUsername())) {
+				return participant;
+			}
+		}
+		return "";
 	}
 
 	public String startChat(User user) throws Exception {

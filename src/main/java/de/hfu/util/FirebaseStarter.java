@@ -3,6 +3,7 @@ package de.hfu.util;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
@@ -228,7 +229,6 @@ public class FirebaseStarter {
 											foundChat.setMessages(messages);
 										}
 									}
-									System.out.println("message processed");
 									chatsProcessed[0]++;
 								}
 
@@ -253,7 +253,25 @@ public class FirebaseStarter {
 				e.printStackTrace();
 			}
 		}
+		sortChats(chats);
 		return chats;
+	}
+
+	private void sortChats(final List<Chat> chats) {
+		chats.sort(new Comparator<Chat>() {
+			@Override
+			public int compare(Chat o1, Chat o2) {
+				if (o1.getMessages() == null && o2.getMessages() != null) {
+					return 1;
+				} else if (o2.getMessages() == null && o1.getMessages() != null) {
+					return -1;
+				} else if (o1.getMessages() == null && o2.getMessages() == null) {
+					return o1.getTimestamp() < o2.getTimestamp() ? 1 : -1;
+				} else {
+					return o1.getMessages().get(0).getTimestamp() < o2.getMessages().get(0).getTimestamp() ? 1 : -1;
+				}
+			}
+		});
 	}
 
 	private List<Message> loadMessages(String id) {
@@ -312,7 +330,7 @@ public class FirebaseStarter {
 
 	public static void main(String[] args) throws Exception {
 		FirebaseStarter fb = new FirebaseStarter();
-		// fb.register(new User("a", "a", "a", "a"));
+		fb.register(new User("Nicock", "Nicock", "Nicock", "Nicock"));
 		// fb.register(new User("b", "b", "b", "b"));
 		// fb.register(new User("c", "c", "c", "c"));
 		// fb.register(new User("d", "d", "d", "d"));
@@ -335,8 +353,6 @@ public class FirebaseStarter {
 		// System.out.println(chat);
 		// }
 		List<String> filter = new ArrayList<>();
-		filter.add("a");
-		filter.add("b");
 		List<User> users = fb.loadUserList(filter);
 		System.out.println(users);
 		System.exit(0);
