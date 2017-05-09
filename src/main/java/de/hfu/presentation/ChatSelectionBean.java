@@ -21,11 +21,11 @@ public class ChatSelectionBean implements Serializable {
 
 	public void initChats() {
 		System.out.println("initializing ChatSelectionBean with init");
-		this.setUser((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
+		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
+		if (currentUser!=null){
+			this.user=currentUser;
+		}
 		this.chats = FirebaseStarter.getInstance().loadChatList(this.user.getUsername());
-		System.out.println("LEL");
-		System.out.println(this.chats);
-		System.out.println(this.user.getUsername());
 	}
 
 	public String displayMessage(Chat chat) {

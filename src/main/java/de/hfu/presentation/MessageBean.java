@@ -41,12 +41,18 @@ public class MessageBean implements Serializable {
 	 * initializes User object using request parameter on page load
 	 */
 	public void initChatroom() {
-		this.user = ((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
+		User currentUser = ((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
+		if (currentUser != null) {
+			this.user = currentUser;
+		}
 		this.username = this.user.getUsername();
-		this.chat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
-		this.chat = FirebaseStarter.getInstance().loadChat(this.chat.getId());
-		this.messages = chat.getMessages();
-		//TODO if no user redirect
+		Chat currentChat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
+		if (currentChat != null) {
+			this.chat = currentChat;
+			this.chat = FirebaseStarter.getInstance().loadChat(this.chat.getId());
+			this.messages = chat.getMessages();
+		}
+		// TODO if no user redirect
 	}
 
 	/**

@@ -15,21 +15,24 @@ import de.hfu.util.FirebaseStarter;
 @ManagedBean
 @SessionScoped
 public class UserBean implements Serializable {
-	
+
 	private List<User> users;
 	private User user;
-	
-	public void initUsers(){
-		this.user = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
+
+	public void initUsers() {
+		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
+		if (currentUser != null) {
+			this.user = currentUser;
+		}
 		List<String> filter = new ArrayList<>();
 		filter.add(this.user.getUsername());
 		this.users = FirebaseStarter.getInstance().loadUserList(filter);
 
 	}
-	
+
 	public String startChat(User user) throws Exception {
 		FirebaseStarter.getInstance().createChat(this.user.getUsername(), user.getUsername());
-		//TODO fix this bs
+		// TODO fix this bs
 		Thread.sleep(1000);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", this.user);
 		return "/chatoverview.xhtml?faces-redirect=true";
