@@ -1,4 +1,4 @@
-package de.hfu.DAO;
+package de.hfu.model;
 
 import java.util.List;
 

@@ -10,8 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 
-import de.hfu.DAO.Message;
-import de.hfu.DAO.User;
+import de.hfu.model.Message;
+import de.hfu.model.User;
 
 @ManagedBean
 @SessionScoped

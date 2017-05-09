@@ -1,6 +1,8 @@
 package de.hfu.presentation;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.concurrent.Semaphore;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.ViewHandler;
@@ -13,25 +15,30 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import de.hfu.DAO.User;
+import de.hfu.model.User;
 import de.hfu.util.FirebaseStarter;
 
+@SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
-public class LoginRegisterBean {
+public class LoginRegisterBean implements Serializable {
 
-	private String username;
-	private String password;
+	//input
+	private String registerName;
+	private String registerPassword;
+	private String loginName;
+	private String loginPassword;
 	private String lastname;
 	private String firstname;
-	private String registerSuccess;
+	
+	//output
+	private String registerText;
+	private String loginText;
+
+	//utility
 	private FirebaseStarter firebaseStarter;
 
-	public String login() {
-		// TODO check if valid creds
-		// navigation
-		return "/chat.xhtml?faces-redirect=true&username=" + username;
-	}
+
 
 	/**
 	 * initializes Bean with necessary objects (nearly same as a constructor)
@@ -40,57 +47,41 @@ public class LoginRegisterBean {
 	public void init() {
 		System.out.println("initializing LoginRegisterBean with init");
 		this.firebaseStarter = new FirebaseStarter();
-		registerSuccess = "Registrieren";
 	}
 
 	public String register() throws Exception {
-		final User user = new User(firstname, lastname, username, password);
-		ValueEventListener registerListener = new ValueEventListener() {
-			@Override
-			public void onDataChange(DataSnapshot userSnapshot) {
-				if (userSnapshot.hasChild(user.getUsername())) {
-					System.out.println("danke dafür");
-					registerSuccess = "Username not available";
-				} else {
-					firebaseStarter.register(user);
-					registerSuccess = "Erfolgreich registriert";
-				}
-
-			}
-
-			@Override
-			public void onCancelled(DatabaseError arg0) {
-			}
-		};
-		firebaseStarter.checkRegister(user, registerListener);
-		//TODO make synchronous on request
-		Thread.sleep(2500);
+		final User user = new User(firstname, lastname, registerName, registerPassword);
+		if (firebaseStarter.register(user)) {
+			this.registerText = "SUCCES";
+		} else {
+			this.registerText = "FAIL";
+		}
 		return null;
 	}
-
-	public void reload() throws IOException {
-		FacesContext context = FacesContext.getCurrentInstance();
-		String viewId = context.getViewRoot().getViewId();
-		ViewHandler handler = context.getApplication().getViewHandler();
-		UIViewRoot root = handler.createView(context, viewId);
-		root.setViewId(viewId);
-		context.setViewRoot(root);
+	
+	public String login() {
+		if (firebaseStarter.login(loginName, loginPassword)) {
+			return "/chat.xhtml?faces-redirect=true&username=" + loginName;
+		} else {
+			loginText = "Wrong Login Credentials";
+			return null;
+		}
 	}
 
-	public String getUsername() {
-		return username;
+	public String getRegisterName() {
+		return registerName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setRegisterName(String username) {
+		this.registerName = username;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getRegisterPassword() {
+		return registerPassword;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setRegisterPassword(String password) {
+		this.registerPassword = password;
 	}
 
 	public String getLastname() {
@@ -109,12 +100,36 @@ public class LoginRegisterBean {
 		this.firstname = firstname;
 	}
 
-	public String getRegisterSuccess() {
-		return registerSuccess;
+	public String getRegisterText() {
+		return registerText;
 	}
 
-	public void setRegisterSuccess(String registerSuccess) {
-		this.registerSuccess = registerSuccess;
+	public void setRegisterText(String registerText) {
+		this.registerText = registerText;
+	}
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
+	}
+
+	public String getLoginName() {
+		return loginName;
+	}
+
+	public void setLoginName(String loginName) {
+		this.loginName = loginName;
+	}
+
+	public String getLoginText() {
+		return loginText;
+	}
+
+	public void setLoginText(String loginText) {
+		this.loginText = loginText;
 	}
 
 }

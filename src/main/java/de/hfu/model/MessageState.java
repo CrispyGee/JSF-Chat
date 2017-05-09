@@ -1,4 +1,4 @@
-package de.hfu.DAO;
+package de.hfu.model;
 
 /**
  * Created by IMTT on 12.04.2017.

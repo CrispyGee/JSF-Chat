@@ -3,7 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<title>JSF Chat - Login</title>
@@ -11,14 +12,16 @@
 <h:body bgcolor="white">
 	<h3>JSF Chat - Login</h3>
 	<h:form>
-		<h:inputText value="#{loginRegisterBean.username}"></h:inputText>
-		<h:inputText value="#{loginRegisterBean.password}"></h:inputText>
+	    <h:outputText value="#{loginRegisterBean.loginText}" />
+		<h:inputText value="#{loginRegisterBean.loginName}"></h:inputText>
+		<h:inputText value="#{loginRegisterBean.loginPassword}"></h:inputText>
 		<h:commandButton value="Einloggen" action="#{loginRegisterBean.login}"></h:commandButton>
 	</h:form>
-	<h4>#{loginRegisterBean.registerSuccess}</h4>
+	<h4>Register</h4>
 	<h:form>
-		<h:inputText value="#{loginRegisterBean.username}"></h:inputText>
-		<h:inputText value="#{loginRegisterBean.password}"></h:inputText>
+		<h:outputText value="#{loginRegisterBean.registerText}" />
+		<h:inputText value="#{loginRegisterBean.registerName}"></h:inputText>
+		<h:inputText value="#{loginRegisterBean.registerPassword}"></h:inputText>
 		<h:inputText value="#{loginRegisterBean.firstname}"></h:inputText>
 		<h:inputText value="#{loginRegisterBean.lastname}"></h:inputText>
 		<h:commandButton value="Registrieren"
