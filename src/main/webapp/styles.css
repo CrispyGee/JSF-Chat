@@ -1,0 +1,45 @@
+.bg_none i {
+    border: 1px solid #3333ff;
+    border-radius: 25px;
+    color: #3333ff;
+    font-size: 17px;
+    height: 33px;
+    line-height: 30px;
+    width: 33px;
+}
+.bg_none:hover i {
+    border: 1px solid #000;
+    border-radius: 25px;
+    color: #000;
+    font-size: 17px;
+    height: 33px;
+    line-height: 30px;
+    width: 33px;
+}
+.bg_none {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+}
+.msg_container_base{
+  background: #e5e5e5;
+  margin: 0;
+  padding: 0 10px 10px;
+  max-height:300px;
+  overflow-x:hidden;
+}
+.base_sent {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.base_sent > .avatar:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border: 5px solid white;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    box-shadow: 1px 1px 2px rgba(black, 0.2); // not quite perfect but close
+}

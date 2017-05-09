@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<link rel="stylesheet" href="styles.css" />
+
+<h:head>
+	<!-- Latest compiled and minified CSS -->
+ 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+	<f:metadata>
+		<f:viewParam name="username" value="#{messageBean.username}" />
+		<f:viewAction action="#{messageBean.initUser}" />
+	</f:metadata>
+	<title>JSF 2.0 Chat Application</title>
+</h:head>
+<h:body>
+	<h4>Eingeloggt als #{messageBean.username}</h4>
+	<a class="btn icon-btn btn-success" href="#"> <span
+		class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
+		Neuer Chat
+	</a>
+	<a class="btn icon-btn btn-info" href="#">
+<span class="glyphicon btn-glyphicon glyphicon-share img-circle text-info"></span>
+Neues Bild
+</a>
+</h:body>
+</html>

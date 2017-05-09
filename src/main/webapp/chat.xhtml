@@ -2,11 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+<link rel="stylesheet" href="styles.css" />
 
 <h:head>
-<!-- Latest compiled and minified CSS -->
-<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous" />
 	<f:metadata>
 		<f:viewParam name="username" value="#{messageBean.username}" />
 		<f:viewAction action="#{messageBean.initUser}" />
@@ -14,14 +19,72 @@
 	<title>JSF 2.0 Chat Application</title>
 </h:head>
 <h:body>
-	<h2>Chat</h2>
 	<h4>Eingeloggt als #{messageBean.username}</h4>
-	<ui:repeat value="#{messageBean.messages}" var="message">
-		<div>#{message.sender.username}: #{message.content}, <i>#{messageBean.formatDate(message.timestamp)}, #{message.messageState}</i></div>
-	</ui:repeat>
-	<h:form>
-		<h:inputText value="#{messageBean.messageContent}"></h:inputText>
-		<h:commandButton value="Senden" actionListener="#{messageBean.send}"></h:commandButton>
-	</h:form>
+	<a class="btn icon-btn btn-success" href="#"> <span
+		class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
+		Neuer Chat
+	</a>
+	<b:form>
+		<b:carousel id="chat"
+			style="width:900px; padding-top:10px; padding-bottom:20px"
+			startAnimation="false" showIndicators="false" wrap="false">
+			<b:carouselItem style="width:900px; height:900px; overflow-y: auto; max-height: 900px">
+				<b:panel title="Chat mit (TODO)" look="primary">
+					<ui:repeat value="#{messageBean.messages}" var="message">
+						<div class="panel-body msg_container_base">
+							<div class="row msg_container base_sent">
+								<div class="col-md-10 col-xs-10">
+									<div>
+										<p style="word-wrap: break-word;">
+											#{message.content}, <i>
+												#{message.messageState}</i>
+										</p>
+									</div>
+								</div>
+								<div class="col-md-2 col-xs-2">
+									<img
+										src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+										class=" img-responsive " />
+										<p>
+										#{message.sender.username} <br/>#{messageBean.formatDate(message.timestamp)}<br/>#{message.sender.onlineState}
+										</p>
+								</div>
+
+							</div>
+						</div>
+						<br />
+					</ui:repeat>
+					<div class="panel-footer">
+						<div class="input-group">
+							<b:inputText label="" value="#{messageBean.messageContent}"
+								placeholder="Nachricht eingeben..."
+								class="form-control input-sm chat_input" />
+							<span class="input-group-btn"> <b:commandButton
+									value="Senden" class="btn btn-primary btn-sm"
+									actionListener="#{messageBean.send}" look="primary"></b:commandButton>
+							</span>
+						</div>
+					</div>
+					<br />
+					<button class="bg_none">
+						<i class="glyphicon glyphicon-film"></i>
+					</button>
+					<button class="bg_none">
+						<i class="glyphicon glyphicon-camera"></i>
+					</button>
+					<button class="bg_none">
+						<i class="glyphicon glyphicon-paperclip"></i>
+					</button>
+					<button class="bg_none pull-right">
+						<i class="glyphicon glyphicon-thumbs-up"></i>
+					</button>
+				</b:panel>
+			</b:carouselItem>
+			<b:carouselControl direction="right">
+			</b:carouselControl>
+			<b:carouselControl direction="left">
+			</b:carouselControl>
+		</b:carousel>
+	</b:form>
 </h:body>
 </html>
