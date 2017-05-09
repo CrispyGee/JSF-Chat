@@ -28,32 +28,38 @@
 		<b:carousel id="chat"
 			style="width:900px; padding-top:10px; padding-bottom:20px"
 			startAnimation="false" showIndicators="false" wrap="false">
-			<b:carouselItem style="width:900px; height:900px; overflow-y: auto; max-height: 900px">
+			<b:carouselItem
+				style="width:900px; height:900px; overflow-y: auto; max-height: 900px">
 				<b:panel title="Chat" look="primary">
-					<ui:repeat value="#{messageBean.messages}" var="message">
-						<div class="panel-body msg_container_base">
-							<div class="row msg_container base_sent">
-								<div class="col-md-10 col-xs-10">
-									<div>
-										<p style="word-wrap: break-word;">
-											#{message.content}, <i>
-												#{message.messageState}</i>
-										</p>
+					<h:form>
+						<h:panelGroup id="chat_messages">
+							<ui:repeat value="#{messageBean.messages}"
+								var="message">
+								<div class="panel-body msg_container_base">
+									<div class="row msg_container base_sent">
+										<div class="col-md-10 col-xs-10">
+											<div>
+												<p style="word-wrap: break-word;">
+													#{message.content}, <i> #{message.messageState}</i>
+												</p>
+											</div>
+										</div>
+										<div class="col-md-2 col-xs-2">
+											<img
+												src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+												class=" img-responsive " />
+											<p>
+												#{message.sender} <br />#{messageBean.formatDate(message.timestamp)}<br />
+											</p>
+										</div>
+
 									</div>
 								</div>
-								<div class="col-md-2 col-xs-2">
-									<img
-										src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-										class=" img-responsive " />
-										<p>
-										#{message.sender} <br/>#{messageBean.formatDate(message.timestamp)}<br/>
-										</p>
-								</div>
-
-							</div>
-						</div>
-						<br />
-					</ui:repeat>
+								<br />
+							</ui:repeat>
+						</h:panelGroup>
+						<p:poll interval="1" update="chat_messages" />
+					</h:form>
 					<div class="panel-footer">
 						<div class="input-group">
 							<b:inputText label="" value="#{messageBean.messageContent}"

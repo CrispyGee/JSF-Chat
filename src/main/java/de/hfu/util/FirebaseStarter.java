@@ -11,6 +11,7 @@ import java.util.concurrent.Semaphore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseCredentials;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,8 +37,8 @@ public class FirebaseStarter {
 		FileInputStream serviceAccount;
 		try {
 			serviceAccount = new FileInputStream(
-					 "C://Users/Christian/workspace/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
-			//"C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
+//					 "C://Users/Christian/workspace/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
+			"C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
 					.setDatabaseUrl("https://jsfchat.firebaseio.com/").build();
@@ -45,7 +46,6 @@ public class FirebaseStarter {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	public User login(String username, final String password) {
@@ -173,6 +173,11 @@ public class FirebaseStarter {
 		chatRef.push().setValue(message);
 		return true;
 	}
+	
+	public void onReceiveMessage(String chatId, ChildEventListener childEventListener){
+		DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("chats/" + chatId + "/messages");
+		chatRef.addChildEventListener(childEventListener);
+	}
 
 	public Chat loadChat(String id) {
 		final Chat chat = new Chat();
@@ -253,7 +258,9 @@ public class FirebaseStarter {
 				e.printStackTrace();
 			}
 		}
-		sortChats(chats);
+		if (chats!=null && !chats.isEmpty()){
+			sortChats(chats);	
+		}
 		return chats;
 	}
 

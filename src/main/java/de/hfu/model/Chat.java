@@ -7,7 +7,7 @@ import java.util.List;
  * Created by IMTT on 12.04.2017.
  */
 @SuppressWarnings("serial")
-public class Chat implements Serializable{
+public class Chat implements Serializable {
 
 	private String name;
 	private String id;
@@ -78,5 +78,13 @@ public class Chat implements Serializable{
 		return "Chat [name=" + name + ", id=" + id + ", timestamp=" + timestamp + ", participants=" + participants
 				+ ", creator=" + creator + ", messages=" + messages + "]";
 	}
-	
+
+	public void addMessage(Message message) {
+		if (this.messages != null) {
+			if (!this.messages.contains(message)){
+				this.messages.add(message);
+			}
+		}
+	}
+
 }
