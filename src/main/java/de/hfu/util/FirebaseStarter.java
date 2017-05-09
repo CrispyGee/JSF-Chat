@@ -20,11 +20,10 @@ public class FirebaseStarter {
 	public FirebaseStarter() {
 		FileInputStream serviceAccount;
 		try {
-			serviceAccount = new FileInputStream("src/main/resources/JSFChat-3a2ee200916b.json");
+			serviceAccount = new FileInputStream("C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
 					.setDatabaseUrl("https://jsfchat.firebaseio.com/").build();
-			//
 			FirebaseApp.initializeApp(options);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -32,40 +31,24 @@ public class FirebaseStarter {
 		
 	}
 	
-	public void saveUser(User user){
-		DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users").push();
+	public void checkRegister(final User user, ValueEventListener registerEvent){
+		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/");
+		ref.addListenerForSingleValueEvent(registerEvent);
+	}
+	
+	public void register(User user){
+		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + user.getUsername());
 		ref.setValue(user);
-	}
-	
-	public void listen(){
-		DatabaseReference ref = FirebaseDatabase.getInstance().getReference("top");
-		ref.addValueEventListener(new ValueEventListener() {
-			@Override
-			public void onDataChange(DataSnapshot dataSnapshot) {
-				User user = dataSnapshot.getValue(User.class);
-				System.out.println(user);
-				System.out.println(user.getFirstname());
-				System.out.println(user.getLastname());
-			}
-
-			@Override
-			public void onCancelled(DatabaseError er) {
-				System.out.println(er);
-			}
-		});
-
-	}
-	
-	public void setObjectToPath(Object object, String path){
 	}
 
 	public static void main(String[] args) throws Exception {
 		FirebaseStarter firebaseStarter = new FirebaseStarter();
 		User user = new User();
-		user.setFirstname("soph");
-		user.setLastname("lebof");
-		firebaseStarter.saveUser(user);
-		firebaseStarter.saveUser(user);
+		user.setFirstname("max");
+		user.setLastname("mustermann");
+		user.setUsername("unique");
+		user.setPassword("1234");
+		firebaseStarter.register(user);
 		Thread.sleep(1000);
 	}
 

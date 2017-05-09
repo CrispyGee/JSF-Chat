@@ -1,11 +1,12 @@
 package de.hfu.DAO;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by IMTT on 12.04.2017.
  */
-public class User {
+public class User implements Serializable {
 
     private String firstname;
     private String lastname;
@@ -13,8 +14,20 @@ public class User {
     private String password;
     private OnlineState onlineState;
     private List<Chat> openChats;
+    
+    public User(){
+    	
+    }
 
-    public String getFirstname() {
+    public User(String firstname, String lastname, String username, String password) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+	}
+
+	public String getFirstname() {
         return firstname;
     }
 

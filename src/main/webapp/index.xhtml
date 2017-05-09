@@ -10,9 +10,19 @@
 </h:head>
 <h:body bgcolor="white">
 	<h3>JSF Chat - Login</h3>
-</h:body>
 	<h:form>
-		<h:inputText value="#{loginBean.username}"></h:inputText>
-		<h:commandButton value="Einloggen" action="#{loginBean.login}"></h:commandButton>
+		<h:inputText value="#{loginRegisterBean.username}"></h:inputText>
+		<h:inputText value="#{loginRegisterBean.password}"></h:inputText>
+		<h:commandButton value="Einloggen" action="#{loginRegisterBean.login}"></h:commandButton>
 	</h:form>
+	<h4>#{loginRegisterBean.registerSuccess}</h4>
+	<h:form>
+		<h:inputText value="#{loginRegisterBean.username}"></h:inputText>
+		<h:inputText value="#{loginRegisterBean.password}"></h:inputText>
+		<h:inputText value="#{loginRegisterBean.firstname}"></h:inputText>
+		<h:inputText value="#{loginRegisterBean.lastname}"></h:inputText>
+		<h:commandButton value="Registrieren"
+			action="#{loginRegisterBean.register}"></h:commandButton>
+	</h:form>
+</h:body>
 </html>
