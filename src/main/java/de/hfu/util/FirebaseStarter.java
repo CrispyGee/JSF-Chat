@@ -20,7 +20,7 @@ public class FirebaseStarter {
 	public FirebaseStarter() {
 		FileInputStream serviceAccount;
 		try {
-			serviceAccount = new FileInputStream("C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
+			serviceAccount = new FileInputStream("C://Users/Christian/workspace/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
 					.setDatabaseUrl("https://jsfchat.firebaseio.com/").build();
