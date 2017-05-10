@@ -22,15 +22,15 @@
 	<ui:repeat value="#{userBean.users}" var="user">
 		<b:panel>
 			<f:facet name="heading">
-					<span
-			class="glyphicon btn-glyphicon glyphicon-user img-circle text-info"></span>
+				<span
+					class="glyphicon btn-glyphicon glyphicon-user img-circle text-info"></span>
 				#{user.username}
 			</f:facet>
 			<div>Vorname: #{user.firstname}</div>
 			<div>Nachname: #{user.lastname}</div>
 			<h:form>
 				<b:commandButton action="#{userBean.startChat(user)}"
-					class="btn icon-btn btn-success" href="#" style ="float: right">
+					class="btn icon-btn btn-success" href="#" style="float: right">
 					<span
 						class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
 				Starte Chat

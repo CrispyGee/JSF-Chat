@@ -40,8 +40,8 @@ public class UserBean implements Serializable {
 		}
 		return chatPartners;
 	}
-	
-	private String getOtherUser(List<String> participants){
+
+	private String getOtherUser(List<String> participants) {
 		for (String participant : participants) {
 			if (!participant.equals(user.getUsername())) {
 				return participant;
