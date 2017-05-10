@@ -24,7 +24,8 @@ public class LoginRegisterBean implements Serializable {
 	private String firstname;
 
 	// output
-	private String registerText;
+	private String registerFail;
+	private String registerSuccess;
 	private String loginText;
 
 	// utility
@@ -39,12 +40,19 @@ public class LoginRegisterBean implements Serializable {
 		this.firebaseStarter = FirebaseStarter.getInstance();
 	}
 
+	public void initLogin() {
+		this.registerFail = null;
+		this.registerSuccess = null;
+	}
+
 	public String register() throws Exception {
 		final User user = new User(firstname, lastname, registerName, registerPassword);
 		if (firebaseStarter.register(user)) {
-			this.registerText = "Erfolgreich registriert!";
+			this.setRegisterSuccess("Erfolgreich registriert!");
+			this.registerFail = null;
 		} else {
-			this.registerText = "Registrierung fehlgeschlagen: Accountname schon vergeben";
+			this.setRegisterFail("Registrierung fehlgeschlagen: Accountname schon vergeben");
+			this.registerSuccess = null;
 		}
 		return null;
 	}
@@ -92,14 +100,6 @@ public class LoginRegisterBean implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public String getRegisterText() {
-		return registerText;
-	}
-
-	public void setRegisterText(String registerText) {
-		this.registerText = registerText;
-	}
-
 	public String getLoginPassword() {
 		return loginPassword;
 	}
@@ -122,6 +122,22 @@ public class LoginRegisterBean implements Serializable {
 
 	public void setLoginText(String loginText) {
 		this.loginText = loginText;
+	}
+
+	public String getRegisterFail() {
+		return registerFail;
+	}
+
+	public void setRegisterFail(String registerFail) {
+		this.registerFail = registerFail;
+	}
+
+	public String getRegisterSuccess() {
+		return registerSuccess;
+	}
+
+	public void setRegisterSuccess(String registerSuccess) {
+		this.registerSuccess = registerSuccess;
 	}
 
 }

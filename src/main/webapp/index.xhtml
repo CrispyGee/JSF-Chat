@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="styles.css" />
 <h:head>
 	<title>JSF Chat - Login</title>
+	<f:metadata>
+		<f:viewAction action="#{loginRegisterBean.initLogin}" />
+	</f:metadata>
 </h:head>
 <h:body bgcolor="white">
 	<b:panelGrid colSpans="4,4,4">
@@ -61,7 +64,9 @@
 							value="#{loginRegisterBean.lastname}" required="true"
 							requiredMessage="Bitte geben Sie einen Nachnamen ein" />
 						<b:alert severity="danger"
-							rendered="#{loginRegisterBean.registerText!=null}">#{loginRegisterBean.registerText}</b:alert>
+							rendered="#{loginRegisterBean.registerFail!=null}">#{loginRegisterBean.registerFail}</b:alert>
+						<b:alert severity="success"
+							rendered="#{loginRegisterBean.registerSuccess!=null}">#{loginRegisterBean.registerSuccess}</b:alert>
 						<b:commandButton value="Registrieren"
 							action="#{loginRegisterBean.register}" look="danger"></b:commandButton>
 					</b:panel>
