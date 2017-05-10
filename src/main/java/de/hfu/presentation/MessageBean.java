@@ -80,11 +80,11 @@ public class MessageBean implements Serializable {
 		this.username = this.user.getUsername();
 		Chat currentChat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
 		if (currentChat != null) {
-			if (this.chat == null || !this.chat.hasMultipleMessages()){
+			if (this.chat == null || !this.chat.hasMultipleMessages()) {
 				this.chat = currentChat;
 				this.chat.setMessages(new ArrayList<Message>());
 			}
-		} 
+		}
 		if (!messageReceive) {
 			receiveMessages();
 			messageReceive = true;
