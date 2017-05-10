@@ -26,10 +26,16 @@
 				class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
 		Neuer Chat
 	</b:commandButton>
+
 		<a class="btn icon-btn btn-info" href="#"> <span
 			class="glyphicon btn-glyphicon glyphicon-share img-circle text-info"></span>
 			Neues Bild
 		</a>
+		<b:commandButton action="#{chatSelectionBean.redirectToLogin()}"
+			class="btn btn-danger icon-btn" href="#">
+			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
+		Logout
+	</b:commandButton>
 	</h:form>
 	<ui:repeat value="#{chatSelectionBean.chats}" var="chat">
 		<b:panel>

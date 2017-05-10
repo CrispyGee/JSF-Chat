@@ -143,6 +143,10 @@ public class MessageBean implements Serializable {
 		return df.format(timestamp);
 	}
 
+	public String redirectToLogin() {
+		return "/index.xhtml?faces-redirect=true";
+	}
+
 	private String getOtherUser(List<String> participants) {
 		for (String participant : participants) {
 			if (!participant.equals(user.getUsername())) {

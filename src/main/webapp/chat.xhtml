@@ -21,6 +21,11 @@
 <h:body>
 	<h4>Eingeloggt als #{messageBean.username}</h4>
 	<h:form>
+		<b:commandButton action="#{messageBean.redirectToLogin()}"
+			class="btn btn-danger icon-btn" href="#">
+			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
+		Logout
+	</b:commandButton>
 		<b:carousel id="chat" style="width:900px; padding-top:10px"
 			startAnimation="false" showIndicators="false" wrap="false">
 
