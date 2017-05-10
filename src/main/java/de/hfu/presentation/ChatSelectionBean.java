@@ -57,6 +57,10 @@ public class ChatSelectionBean implements Serializable {
 		return "/users.xhtml?faces-redirect=true";
 	}
 
+	public String redirectToLogin() {
+		return "/index.xhtml?faces-redirect=true";
+	}
+
 	public String showChat(Chat chat) {
 		System.out.println("______________________________-");
 		System.out.println(this.user);
