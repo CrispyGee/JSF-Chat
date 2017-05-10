@@ -143,6 +143,11 @@ public class MessageBean implements Serializable {
 		return df.format(timestamp);
 	}
 
+	public String redirectToChatOverview() {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
+		return "/chatoverview.xhtml?faces-redirect=true";
+	}
+
 	public String redirectToLogin() {
 		return "/index.xhtml?faces-redirect=true";
 	}

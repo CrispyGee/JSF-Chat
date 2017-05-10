@@ -59,6 +59,10 @@ public class UserBean implements Serializable {
 		return "/chat.xhtml?faces-redirect=true";
 	}
 
+	public String redirectToLogin() {
+		return "/index.xhtml?faces-redirect=true";
+	}
+
 	public List<User> getUsers() {
 		return users;
 	}

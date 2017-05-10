@@ -61,6 +61,11 @@ public class ChatSelectionBean implements Serializable {
 		return "/index.xhtml?faces-redirect=true";
 	}
 
+	public String redirectToChatOverview() {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
+		return "/chatoverview.xhtml?faces-redirect=true";
+	}
+	
 	public String showChat(Chat chat) {
 		System.out.println("______________________________-");
 		System.out.println(this.user);

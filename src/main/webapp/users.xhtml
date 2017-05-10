@@ -19,6 +19,20 @@
 </h:head>
 <h:body>
 	<h4>Eingeloggt als #{userBean.user.username}</h4>
+	<h:form>
+		<b:commandButton action="#{userBean.redirectToLogin()}"
+			class="btn btn-danger icon-btn" href="#">
+			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
+		Logout
+		</b:commandButton>
+		<b:commandButton
+			action="#{chatSelectionBean.redirectToChatOverview()}"
+			class="btn btn-primary icon-btn" href="#">
+			<span
+				class="glyphicon btn-glyphicon glyphicon-minus img-circle text-success"></span>
+		zurück
+	</b:commandButton>
+	</h:form>
 	<ui:repeat value="#{userBean.users}" var="user">
 		<b:panel>
 			<f:facet name="heading">

@@ -26,6 +26,13 @@
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
 		Logout
 	</b:commandButton>
+		<b:commandButton
+			action="#{messageBean.redirectToChatOverview()}"
+			class="btn btn-primary icon-btn" href="#">
+			<span
+				class="glyphicon btn-glyphicon glyphicon-minus img-circle text-success"></span>
+		zurück
+	</b:commandButton>
 		<b:carousel id="chat" style="width:900px; padding-top:10px"
 			startAnimation="false" showIndicators="false" wrap="false">
 
