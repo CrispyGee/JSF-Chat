@@ -59,8 +59,8 @@ public class MessageBean implements Serializable {
 			@Override
 			public void onChildAdded(DataSnapshot msgSnapshot, String arg1) {
 				Message message = msgSnapshot.getValue(Message.class);
+				System.out.println("received " + message);
 				chat.addMessage(message);
-				messageReceive = true;
 			}
 
 			@Override
@@ -80,14 +80,14 @@ public class MessageBean implements Serializable {
 		this.username = this.user.getUsername();
 		Chat currentChat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
 		if (currentChat != null) {
-			this.chat = currentChat;
-			this.chat.setMessages(new ArrayList<Message>());
-		} else {
-			// this.chat = new Chat(); //TODO: HIER MUSS N CHAT ERSTELLT WERDEn
-		}
+			if (this.chat == null || !this.chat.hasMultipleMessages()){
+				this.chat = currentChat;
+				this.chat.setMessages(new ArrayList<Message>());
+			}
+		} 
 		if (!messageReceive) {
-			Thread.sleep(1000);
 			receiveMessages();
+			messageReceive = true;
 		}
 		this.otherUsername = getOtherUser(this.chat.getParticipants());
 		// TODO if no user redirect
@@ -99,6 +99,7 @@ public class MessageBean implements Serializable {
 	 * @param e
 	 */
 	public void send(ActionEvent e) {
+		System.out.println("sending message");
 		FirebaseStarter.getInstance().sendMessage(this.chat.getId(), this.messageContent, this.user.getUsername());
 		this.messageContent = "";
 	}

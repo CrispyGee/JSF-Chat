@@ -81,10 +81,14 @@ public class Chat implements Serializable {
 
 	public void addMessage(Message message) {
 		if (this.messages != null) {
-			if (!this.messages.contains(message)){
+			if (!this.messages.contains(message)) {
 				this.messages.add(message);
 			}
 		}
+	}
+
+	public boolean hasMultipleMessages() {
+		return this.messages != null && this.messages.size() > 1;
 	}
 
 }

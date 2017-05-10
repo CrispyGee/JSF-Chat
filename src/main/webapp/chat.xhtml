@@ -20,40 +20,39 @@
 </h:head>
 <h:body>
 	<h4>Eingeloggt als #{messageBean.username}</h4>
-	<b:form>
+	<h:form>
 		<b:carousel id="chat" style="width:900px; padding-top:10px"
 			startAnimation="false" showIndicators="false" wrap="false">
-			<b:carouselItem style="width:900px; height:600px; overflow-y: auto; max-height: 600px">
-				<b:panel title="Chat mit #{messageBean.otherUsername}" look="primary">
-					<h:form>
-						<h:panelGroup id="chat_messages">
-							<ui:repeat value="#{messageBean.chat.getMessages()}"
-								var="message">
-								<div class="panel-body msg_container_base">
-									<div class="row msg_container base_sent">
-										<div class="col-md-10 col-xs-10">
-											<div>
-												<p style="word-wrap: break-word;">
-													#{message.content}, <i> #{message.messageState}</i>
-												</p>
-											</div>
-										</div>
-										<div class="col-md-2 col-xs-2">
-											<img
-												src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-												class=" img-responsive " />
-											<p>
-												#{message.sender} <br />#{messageBean.formatDate(message.timestamp)}<br />
+			<b:carouselItem
+				style="width:900px; height:600px; overflow-y: auto; max-height: 600px">
+				<b:panel title="Chat mit #{messageBean.otherUsername}"
+					look="primary">
+					<h:panelGroup id="chat_messages">
+						<ui:repeat value="#{messageBean.chat.getMessages()}" var="message">
+							<div class="panel-body msg_container_base">
+								<div class="row msg_container base_sent">
+									<div class="col-md-10 col-xs-10">
+										<div>
+											<p style="word-wrap: break-word;">
+												#{message.content}, <i> #{message.messageState}</i>
 											</p>
 										</div>
-
 									</div>
+									<div class="col-md-2 col-xs-2">
+										<img
+											src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+											class=" img-responsive " />
+										<p>
+											#{message.sender} <br />#{messageBean.formatDate(message.timestamp)}<br />
+										</p>
+									</div>
+
 								</div>
-								<br />
-							</ui:repeat>
-						</h:panelGroup>
-						<p:poll interval="1" update="chat_messages" />
-					</h:form>
+							</div>
+							<br />
+						</ui:repeat>
+					</h:panelGroup>
+					<p:poll interval="1" update="chat_messages" />
 				</b:panel>
 			</b:carouselItem>
 			<b:carouselControl direction="right">
@@ -72,7 +71,6 @@
 				</span>
 			</div>
 		</div>
-		<br />
 		<!-- <button class="bg_none">
 			<i class="glyphicon glyphicon-film"></i>
 		</button>
@@ -85,6 +83,6 @@
 		<button class="bg_none pull-right">
 			<i class="glyphicon glyphicon-thumbs-up"></i>
 		</button> -->
-	</b:form>
+	</h:form>
 </h:body>
 </html>
