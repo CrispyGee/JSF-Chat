@@ -71,6 +71,7 @@ public class MessageBean implements Serializable {
 		if (messageReceive == null) {
 			messageReceive = new HashMap<>();
 		}
+		this.messageContent = "";
 		User currentUser = ((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
 		if (currentUser != null) {
 			this.user = currentUser;

@@ -20,7 +20,7 @@
 </h:head>
 <h:body>
 	<h4>Eingeloggt als #{messageBean.username}</h4>
-	<h:form>
+	<b:form>
 		<b:commandButton action="#{messageBean.redirectToLogin()}"
 			class="btn btn-danger icon-btn" href="#">
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
@@ -47,7 +47,8 @@
 									<div class="col-md-10 col-xs-10">
 										<div>
 											<p style="word-wrap: break-word;">
-												#{message.content}, <i> #{message.messageState}</i>
+												#{message.content}
+												<!-- 												<i> #{message.messageState}</i> -->
 											</p>
 										</div>
 									</div>
@@ -73,18 +74,22 @@
 			<b:carouselControl direction="left">
 			</b:carouselControl>
 		</b:carousel>
+	</b:form>
+	<b:form>
 		<div class="panel-footer" style="width: 900px;">
 			<div class="input-group">
-				<b:inputText label="" value="#{messageBean.messageContent}"
+				<b:inputText id="input_txt" label=""
+					value="#{messageBean.messageContent}"
 					placeholder="Nachricht eingeben..."
 					class="form-control input-sm chat_input" />
 				<span class="input-group-btn"> <b:commandButton
 						value="Senden" class="btn btn-primary btn-sm" ajax="true"
-						update="@none" actionListener="#{messageBean.send}" look="primary"></b:commandButton>
+						update="@form" actionListener="#{messageBean.send}" look="primary"></b:commandButton>
 				</span>
 			</div>
 		</div>
-		<!-- <button class="bg_none">
+	</b:form>
+	<!-- <button class="bg_none">
 			<i class="glyphicon glyphicon-film"></i>
 		</button>
 		<button class="bg_none">
@@ -96,6 +101,5 @@
 		<button class="bg_none pull-right">
 			<i class="glyphicon glyphicon-thumbs-up"></i>
 		</button> -->
-	</h:form>
 </h:body>
 </html>
