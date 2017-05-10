@@ -218,11 +218,11 @@ public class FirebaseStarter {
 					final Chat foundChat = snapshot.getValue(Chat.class);
 					chats.add(foundChat);
 					FirebaseDatabase.getInstance().getReference("chats/" + id + "/messages").limitToLast(1)
-							.addValueEventListener(new ValueEventListener() {
+							.addListenerForSingleValueEvent(new ValueEventListener() {
 								@Override
 								public void onDataChange(DataSnapshot snapshot) {
 									if (snapshot.exists()) {
-										System.out.println(snapshot);
+										System.out.println("snapshot LUL" + snapshot);
 										Iterable<DataSnapshot> children = snapshot.getChildren();
 										// there is only 1 message, but we still
 										// have to iterate due to the structure

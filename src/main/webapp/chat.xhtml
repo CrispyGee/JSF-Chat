@@ -68,6 +68,7 @@
 					class="form-control input-sm chat_input" />
 				<span class="input-group-btn"> <b:commandButton
 						value="Senden" class="btn btn-primary btn-sm"
+						ajax="true" update="@none"
 						actionListener="#{messageBean.send}" look="primary"></b:commandButton>
 				</span>
 			</div>
