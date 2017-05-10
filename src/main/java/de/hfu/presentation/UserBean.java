@@ -51,10 +51,11 @@ public class UserBean implements Serializable {
 	}
 
 	public String startChat(User user) throws Exception {
-		FirebaseStarter.getInstance().createChat(this.user.getUsername(), user.getUsername());
+		Chat chat = FirebaseStarter.getInstance().createChat(this.user.getUsername(), user.getUsername());
 		// TODO fix this bs
 		Thread.sleep(1000);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", this.user);
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("chat", chat);
 		return "/chat.xhtml?faces-redirect=true";
 	}
 
