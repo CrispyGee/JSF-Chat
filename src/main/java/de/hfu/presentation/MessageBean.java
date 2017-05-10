@@ -77,7 +77,7 @@ public class MessageBean implements Serializable {
 			previousChat = this.chat.getId();
 		}
 		if (previousChat.equals(currentChat.getId())) {
-			//do nothing is this case, since this chat is already loaded
+			// do nothing is this case, since this chat is already loaded
 		} else {
 			this.chat = currentChat;
 			this.chat.setMessages(new ArrayList<Message>());
