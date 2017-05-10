@@ -3,7 +3,9 @@ package de.hfu.presentation;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -30,7 +32,7 @@ public class MessageBean implements Serializable {
 	private User user;
 	private String messageContent;
 	private Chat chat;
-	private boolean messageReceive = false;
+	private Map<String, Boolean> messageReceive;
 	private String otherUsername;
 
 	public void receiveMessages() {
@@ -66,6 +68,9 @@ public class MessageBean implements Serializable {
 	 */
 	public void initChatroom() throws Exception {
 		System.out.println("initializing chatroom");
+		if (messageReceive == null) {
+			messageReceive = new HashMap<>();
+		}
 		User currentUser = ((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
 		if (currentUser != null) {
 			this.user = currentUser;
@@ -79,9 +84,12 @@ public class MessageBean implements Serializable {
 		if (previousChat.equals(currentChat.getId())) {
 			// do nothing is this case, since this chat is already loaded
 		} else {
-			this.chat = currentChat;
-			this.chat.setMessages(new ArrayList<Message>());
-			receiveMessages();
+			this.chat = FirebaseStarter.getInstance().loadChat(currentChat.getId());
+			if (messageReceive.get(currentChat.getId()) == null || !messageReceive.get(currentChat.getId())) {
+				this.chat.setMessages(new ArrayList<Message>());
+				receiveMessages();
+				messageReceive.put(this.chat.getId(), true);
+			}
 		}
 		this.otherUsername = getOtherUser(this.chat.getParticipants());
 		// TODO if no user redirect
