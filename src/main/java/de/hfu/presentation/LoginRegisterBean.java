@@ -15,22 +15,20 @@ import de.hfu.util.FirebaseStarter;
 @SessionScoped
 public class LoginRegisterBean implements Serializable {
 
-	//input
+	// input
 	private String registerName;
 	private String registerPassword;
 	private String loginName;
 	private String loginPassword;
 	private String lastname;
 	private String firstname;
-	
-	//output
+
+	// output
 	private String registerText;
 	private String loginText;
 
-	//utility
+	// utility
 	private FirebaseStarter firebaseStarter;
-
-
 
 	/**
 	 * initializes Bean with necessary objects (nearly same as a constructor)
@@ -50,10 +48,10 @@ public class LoginRegisterBean implements Serializable {
 		}
 		return null;
 	}
-	
+
 	public String login() {
 		User user = firebaseStarter.login(loginName, loginPassword);
-		if (user.getUsername()!=null) {
+		if (user.getUsername() != null) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
 			return "/chatoverview.xhtml?faces-redirect=true";
 		} else {
