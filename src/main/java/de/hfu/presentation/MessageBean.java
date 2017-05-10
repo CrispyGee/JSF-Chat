@@ -72,19 +72,16 @@ public class MessageBean implements Serializable {
 		}
 		this.username = this.user.getUsername();
 		Chat currentChat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
-		// if (currentChat != null) {
-		// if (this.chat == null || !this.chat.hasMultipleMessages()){
-//		String prev
-		if (this.chat !=null) {
-			
+		String previousChat = "";
+		if (this.chat != null) {
+			previousChat = this.chat.getId();
 		}
-		this.chat = currentChat;
-		this.chat.setMessages(new ArrayList<Message>());
-		// }
-		// }
-		if (!messageReceive) {
+		if (previousChat.equals(currentChat.getId())) {
+			//do nothing is this case, since this chat is already loaded
+		} else {
+			this.chat = currentChat;
+			this.chat.setMessages(new ArrayList<Message>());
 			receiveMessages();
-			messageReceive = true;
 		}
 		this.otherUsername = getOtherUser(this.chat.getParticipants());
 		// TODO if no user redirect
