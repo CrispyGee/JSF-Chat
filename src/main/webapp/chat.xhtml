@@ -23,8 +23,7 @@
 	<b:form>
 		<b:carousel id="chat" style="width:900px; padding-top:10px"
 			startAnimation="false" showIndicators="false" wrap="false">
-			<b:carouselItem
-				style="width:900px; height:600px; overflow-y: auto; max-height: 900px">
+			<b:carouselItem style="width:900px; height:600px; overflow-y: auto; max-height: 900px">
 				<b:panel title="Chat mit #{messageBean.otherUsername}"
 					look="primary">
 					<ui:repeat value="#{messageBean.chat.getMessages()}" var="message">
