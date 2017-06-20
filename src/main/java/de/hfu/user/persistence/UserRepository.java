@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import de.hfu.user.model.OnlineState;
 import de.hfu.user.model.User;
 
 @ManagedBean(name = "userRepository")
@@ -23,7 +24,7 @@ public class UserRepository {
 		//default
 	}
 	
-	public User login(String username, final String password) {
+	public User login(final String username, final String password) {
 		final Semaphore semaphore = new Semaphore(0);
 		final User userBack[] = { new User() };
 		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + username + "/user");
@@ -32,6 +33,9 @@ public class UserRepository {
 			public void onDataChange(DataSnapshot snap) {
 				try {
 					User user = snap.getValue(User.class);
+					//if user was found, mark him as online
+					final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("users/" + username + "/user/onlineState");
+					ref2.setValue(OnlineState.online);
 					userBack[0] = user;
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,6 +55,16 @@ public class UserRepository {
 			e.printStackTrace();
 		}
 		return userBack[0];
+	}
+	
+	/**
+	 * Logs out user asynchronously - flags as offline
+	 * 
+	 * @param username
+	 */
+	public void logout(String username) {
+		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users/" + username + "/user/onlineState");
+		ref.setValue(OnlineState.offline);
 	}
 
 	public boolean register(final User user) {
@@ -118,6 +132,10 @@ public class UserRepository {
 			}
 		}
 		return usersFiltered;
+	}
+	
+	public List<User> loadUserList() {
+		return this.loadUserList(new ArrayList<String>());
 	}
 
 }
