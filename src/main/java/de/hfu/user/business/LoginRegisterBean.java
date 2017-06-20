@@ -7,6 +7,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.NamedEvent;
+import javax.servlet.http.HttpSession;
+import javax.validation.constraints.Size;
 
 import de.hfu.services.FirebaseConnector;
 import de.hfu.user.model.User;
@@ -33,7 +36,7 @@ public class LoginRegisterBean implements Serializable {
 	// utility
 	@ManagedProperty(value="#{userRepository}")
 	private UserRepository userRepository;
-
+	
 	/**
 	 * initializes Bean with necessary objects (nearly same as a constructor)
 	 */
@@ -63,14 +66,21 @@ public class LoginRegisterBean implements Serializable {
 	public String login() {
 		User user = userRepository.login(loginName, loginPassword);
 		if (user.getUsername() != null) {
-			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
+			//FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
+						
+			// store session
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+			
+			session.setAttribute("user", user);
+			
 			return "/chatOverview.xhtml?faces-redirect=true";
 		} else {
 			loginText = "Login fehlgeschlagen: Ungültige Anmeldedaten";
 			return null;
 		}
 	}
-
+	
+	@Size(min=3, max=10, message="Min 3 and max 10 characters")
 	public String getRegisterName() {
 		return registerName;
 	}

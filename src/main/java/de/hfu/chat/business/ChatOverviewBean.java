@@ -1,5 +1,6 @@
 package de.hfu.chat.business;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -7,29 +8,45 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import de.hfu.chat.model.Chat;
 import de.hfu.chat.persistence.ChatRepository;
+import de.hfu.services.Utils;
 import de.hfu.user.model.User;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
 public class ChatOverviewBean implements Serializable {
-	
+
 	private User user;
 	private List<Chat> chats;
-	
-	@ManagedProperty(value="#{chatRepository}")
+
+	@ManagedProperty(value = "#{chatRepository}")
 	private ChatRepository chatRepository;
 
 	public void initChats() {
 		System.out.println("initializing ChatOverviewBean with init");
-		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
+
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		User currentUser = (User) session.getAttribute("user");
+
+		// User currentUser = (User)
+		// FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
 		if (currentUser != null) {
 			this.user = currentUser;
+		} else {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+
 		this.chats = this.chatRepository.loadChatList(this.user.getUsername());
 	}
 
@@ -62,15 +79,11 @@ public class ChatOverviewBean implements Serializable {
 		return "/userOverview.xhtml?faces-redirect=true";
 	}
 
-	public String redirectToLogin() {
-		return "/index.xhtml?faces-redirect=true";
-	}
-
 	public String redirectToChatOverview() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
 		return "/chatOverview.xhtml?faces-redirect=true";
 	}
-	
+
 	public String showChat(Chat chat) {
 		System.out.println("______________________________-");
 		System.out.println(this.user);
@@ -103,5 +116,5 @@ public class ChatOverviewBean implements Serializable {
 	public void setChatRepository(ChatRepository chatRepository) {
 		this.chatRepository = chatRepository;
 	}
-	
+
 }
