@@ -21,6 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 import de.hfu.model.Chat;
 import de.hfu.model.Message;
 import de.hfu.model.User;
+//Service Klassen entstehen
+//bilden eigene Schicht
+//dritte Schicht mit repository klasse als singleton
 
 public class FirebaseStarter {
 
@@ -37,8 +40,8 @@ public class FirebaseStarter {
 		FileInputStream serviceAccount;
 		try {
 			serviceAccount = new FileInputStream(
-//					 "C://Users/Christian/workspace/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
-			"C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
+					"C://Users/Christian/workspace/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
+			// "C://Users/IMTT/git/JSF-Chat/src/main/resources/JSFChat-3a2ee200916b.json");
 			FirebaseOptions options = new FirebaseOptions.Builder()
 					.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
 					.setDatabaseUrl("https://jsfchat.firebaseio.com/").build();
@@ -173,8 +176,8 @@ public class FirebaseStarter {
 		chatRef.push().setValue(message);
 		return true;
 	}
-	
-	public void onReceiveMessage(String chatId, ChildEventListener childEventListener){
+
+	public void onReceiveMessage(String chatId, ChildEventListener childEventListener) {
 		DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("chats/" + chatId + "/messages");
 		chatRef.addChildEventListener(childEventListener);
 	}
@@ -258,8 +261,8 @@ public class FirebaseStarter {
 				e.printStackTrace();
 			}
 		}
-		if (chats!=null && !chats.isEmpty()){
-			sortChats(chats);	
+		if (chats != null && !chats.isEmpty()) {
+			sortChats(chats);
 		}
 		return chats;
 	}

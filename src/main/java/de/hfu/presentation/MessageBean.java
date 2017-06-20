@@ -1,6 +1,7 @@
 package de.hfu.presentation;
 
 import java.io.Serializable;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,8 @@ import de.hfu.model.Message;
 import de.hfu.model.User;
 import de.hfu.util.FirebaseStarter;
 
+
+//user.model, chat.model etc
 @ManagedBean
 @SessionScoped
 public class MessageBean implements Serializable {
