@@ -115,8 +115,8 @@ public class ChatRepository {
 				e.printStackTrace();
 			}
 		}
-		if (chats!=null && !chats.isEmpty()){
-			sortChats(chats);	
+		if (chats != null && !chats.isEmpty()) {
+			sortChats(chats);
 		}
 		return chats;
 	}
@@ -168,8 +168,6 @@ public class ChatRepository {
 		});
 	}
 
-	//Helper Methods
-	
 	private List<Message> loadMessages(String id) {
 		final Semaphore semaphore = new Semaphore(0);
 		final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("chats/" + id + "/messages");

@@ -1,6 +1,7 @@
 package de.hfu.chat;
 
 import java.io.Serializable;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,8 @@ import de.hfu.chat.message.Message;
 import de.hfu.chat.message.MessageRepository;
 import de.hfu.user.User;
 
+
+//user.model, chat.model etc
 @ManagedBean
 @SessionScoped
 public class ChatRoomBean implements Serializable {
