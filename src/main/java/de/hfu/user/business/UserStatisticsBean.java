@@ -37,7 +37,6 @@ public class UserStatisticsBean {
 		this.users = userRepository.loadUserList();
 		System.out.println(this.users);
 		createBarModel();
-
 	}
 
 	private BarChartModel initBarModel() {

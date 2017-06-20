@@ -1,5 +1,6 @@
 package de.hfu.chat.business;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +24,6 @@ import de.hfu.chat.model.Message;
 import de.hfu.chat.persistence.ChatRepository;
 import de.hfu.chat.persistence.MessageRepository;
 import de.hfu.user.model.User;
-
 
 @ManagedBean
 @SessionScoped
@@ -36,16 +37,15 @@ public class ChatRoomBean implements Serializable {
 	private Chat chat;
 	private Map<String, Boolean> messageReceive;
 	private String otherUsername;
-	
-	@ManagedProperty(value="#{messageRepository}")
+
+	@ManagedProperty(value = "#{messageRepository}")
 	private MessageRepository messageRepository;
-	
-	@ManagedProperty(value="#{chatRepository}")
+
+	@ManagedProperty(value = "#{chatRepository}")
 	private ChatRepository chatRepository;
 
-
 	public void receiveMessages() {
-		
+
 		messageRepository.onReceiveMessage(this.chat.getId(), new ChildEventListener() {
 
 			@Override
@@ -82,9 +82,21 @@ public class ChatRoomBean implements Serializable {
 			messageReceive = new HashMap<>();
 		}
 		this.messageContent = "";
-		User currentUser = ((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
+
+//		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
+
+		 HttpSession session = (HttpSession)
+		 FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		 User currentUser = (User) session.getAttribute("user");
 		if (currentUser != null) {
 			this.user = currentUser;
+		} else {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		this.username = this.user.getUsername();
 		Chat currentChat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
@@ -150,7 +162,6 @@ public class ChatRoomBean implements Serializable {
 		this.otherUsername = otherUsername;
 	}
 
-
 	public String redirectToChatOverview() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
 		return "/chatOverview.xhtml?faces-redirect=true";
@@ -180,7 +191,5 @@ public class ChatRoomBean implements Serializable {
 	public void setChatRepository(ChatRepository chatRepository) {
 		this.chatRepository = chatRepository;
 	}
-	
-	
 
 }
