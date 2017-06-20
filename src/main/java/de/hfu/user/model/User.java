@@ -21,6 +21,7 @@ public class User implements Serializable {
 
 	public User() {
 		this.timestamp = System.currentTimeMillis();
+		this.onlineState = OnlineState.offline;
 	}
 
 	public User(String firstname, String lastname, String username, String password) {
@@ -30,6 +31,7 @@ public class User implements Serializable {
 		this.lastname = lastname;
 		this.username = username;
 		this.password = password;
+		this.onlineState = OnlineState.offline;
 	}
 
 	public String getFirstname() {
@@ -80,18 +82,19 @@ public class User implements Serializable {
 		this.openChats = openChats;
 	}
 
-	@Override
-	public String toString() {
-		return "User [firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", password="
-				+ password + ", onlineState=" + onlineState + ", openChats=" + openChats + "]";
-	}
-
 	public long getTimestamp() {
 		return timestamp;
 	}
 
 	public void setTimestamp(long timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	@Override
+	public String toString() {
+		return "User [firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", password="
+				+ password + ", timestamp=" + timestamp + ", onlineState=" + onlineState + ", openChats=" + openChats
+				+ "]";
 	}
 	
 }

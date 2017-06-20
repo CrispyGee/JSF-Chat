@@ -21,13 +21,12 @@
 <h:body>
 	<h4>Eingeloggt als #{chatRoomBean.username}</h4>
 	<b:form>
-		<b:commandButton action="#{chatRoomBean.redirectToLogin()}"
+		<b:commandButton action="#{logoutBean.logout(chatRoomBean.username)}"
 			class="btn btn-danger icon-btn" href="#">
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
 		Logout
 	</b:commandButton>
-		<b:commandButton
-			action="#{chatRoomBean.redirectToChatOverview()}"
+		<b:commandButton action="#{chatRoomBean.redirectToChatOverview()}"
 			class="btn btn-primary icon-btn" href="#">
 			<span
 				class="glyphicon btn-glyphicon glyphicon-minus img-circle text-success"></span>
@@ -41,7 +40,8 @@
 				<b:panel title="Chat mit #{chatRoomBean.otherUsername}"
 					look="primary">
 					<h:panelGroup id="chat_messages">
-						<ui:repeat value="#{chatRoomBean.chat.getMessages()}" var="message">
+						<ui:repeat value="#{chatRoomBean.chat.getMessages()}"
+							var="message">
 							<div class="panel-body msg_container_base">
 								<div class="row msg_container base_sent">
 									<div class="col-md-10 col-xs-10">
@@ -57,7 +57,7 @@
 											src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
 											class=" img-responsive " />
 										<p>
-											#{message.sender} <br />#{chatRoomBean.formatDate(message.timestamp)}<br />
+											#{message.sender} <br />#{dateFormatBean.formatSmall(message.timestamp)}<br />
 										</p>
 									</div>
 
@@ -84,7 +84,8 @@
 					class="form-control input-sm chat_input" />
 				<span class="input-group-btn"> <b:commandButton
 						value="Senden" class="btn btn-primary btn-sm" ajax="true"
-						update="@form" actionListener="#{chatRoomBean.send}" look="primary"></b:commandButton>
+						update="@form" actionListener="#{chatRoomBean.send}"
+						look="primary"></b:commandButton>
 				</span>
 			</div>
 		</div>

@@ -2,7 +2,6 @@ package de.hfu.chat.business;
 
 import java.io.Serializable;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -151,18 +150,10 @@ public class ChatRoomBean implements Serializable {
 		this.otherUsername = otherUsername;
 	}
 
-	public String formatDate(long timestamp) {
-		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
-		return df.format(timestamp);
-	}
 
 	public String redirectToChatOverview() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
 		return "/chatOverview.xhtml?faces-redirect=true";
-	}
-
-	public String redirectToLogin() {
-		return "/index.xhtml?faces-redirect=true";
 	}
 
 	private String getOtherUser(List<String> participants) {

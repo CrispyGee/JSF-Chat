@@ -21,11 +21,11 @@ public class UserOverviewBean implements Serializable {
 
 	private List<User> users;
 	private User user;
-	
-	@ManagedProperty(value="#{userRepository}")
+
+	@ManagedProperty(value = "#{userRepository}")
 	private UserRepository userRepository;
 
-	@ManagedProperty(value="#{chatRepository}")
+	@ManagedProperty(value = "#{chatRepository}")
 	private ChatRepository chatRepository;
 
 	public void initUsers() {
@@ -69,10 +69,6 @@ public class UserOverviewBean implements Serializable {
 		return "/chatRoom.xhtml?faces-redirect=true";
 	}
 
-	public String redirectToLogin() {
-		return "/index.xhtml?faces-redirect=true";
-	}
-
 	public List<User> getUsers() {
 		return users;
 	}
@@ -104,5 +100,5 @@ public class UserOverviewBean implements Serializable {
 	public void setChatRepository(ChatRepository chatRepository) {
 		this.chatRepository = chatRepository;
 	}
-	
+
 }

@@ -62,10 +62,6 @@ public class ChatOverviewBean implements Serializable {
 		return "/userOverview.xhtml?faces-redirect=true";
 	}
 
-	public String redirectToLogin() {
-		return "/index.xhtml?faces-redirect=true";
-	}
-
 	public String redirectToChatOverview() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
 		return "/chatOverview.xhtml?faces-redirect=true";

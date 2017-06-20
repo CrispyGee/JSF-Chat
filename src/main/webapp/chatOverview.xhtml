@@ -15,7 +15,7 @@
 	<f:metadata>
 		<f:viewAction action="#{chatOverviewBean.initChats}" />
 	</f:metadata>
-	<title>JSF 2.0 Chat Application</title>
+	<title>JSF - Offene Chats</title>
 </h:head>
 <h:body>
 	<h4>Eingeloggt als #{chatOverviewBean.user.username}</h4>
@@ -31,7 +31,7 @@
 			class="glyphicon btn-glyphicon glyphicon-share img-circle text-info"></span>
 			Neues Bild
 		</a>
-		<b:commandButton action="#{chatOverviewBean.redirectToLogin()}"
+		<b:commandButton action="#{logoutBean.logout(chatOverviewBean.user.username)}"
 			class="btn btn-danger icon-btn" href="#">
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
 		Logout

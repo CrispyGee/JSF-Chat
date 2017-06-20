@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+<link rel="stylesheet" href="styles.css" />
+
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{userStatisticsBean.initUsers}" />
+	</f:metadata>
+</h:head>
+
+<h:body>
+	<b:form>
+		<b:commandButton action="#{logoutBean.backToLogin()}"
+			class="btn btn-danger icon-btn" href="#">
+			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
+		Zurück zum Login
+	</b:commandButton>
+	</b:form>
+	<p:dataTable var="user" value="#{userStatisticsBean.users}">
+
+		<p:column headerText="Account">
+			<h:outputText value="#{user.username}" />
+		</p:column>
+
+		<p:column headerText="Vorname">
+			<h:outputText value="#{user.firstname}" />
+		</p:column>
+
+		<p:column headerText="Nachname">
+			<h:outputText value="#{user.lastname}" />
+		</p:column>
+
+		<p:column headerText="Onlinestatus">
+			<h:outputText value="#{user.onlineState}" />
+		</p:column>
+
+		<p:column headerText="Anmeldedatum">
+			<h:outputText value="#{dateFormatBean.formatFull(user.timestamp)}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<p:chart type="bar" model="#{userStatisticsBean.barModel}"
+		style="height:500px" />
+
+</h:body>
+
+</html>

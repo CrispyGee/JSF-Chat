@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+<link rel="stylesheet" href="styles.css" />
+
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{chatStatisticsBean.initChats}" />
+	</f:metadata>
+</h:head>
+
+<h:body>
+	<b:form>
+		<b:commandButton action="#{logoutBean.backToLogin()}"
+			class="btn btn-danger icon-btn" href="#">
+			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
+		Zurück zum Login
+	</b:commandButton>
+	</b:form>
+
+	<p:chart type="line" model="#{chatStatisticsBean.lineModel}" style="height:600px;"/>
+
+</h:body>
+
+</html>

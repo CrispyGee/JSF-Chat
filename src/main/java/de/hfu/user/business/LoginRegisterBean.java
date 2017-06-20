@@ -31,7 +31,7 @@ public class LoginRegisterBean implements Serializable {
 	private String loginText;
 
 	// utility
-	@ManagedProperty(value="#{userRepository}")
+	@ManagedProperty(value = "#{userRepository}")
 	private UserRepository userRepository;
 
 	/**
@@ -69,6 +69,14 @@ public class LoginRegisterBean implements Serializable {
 			loginText = "Login fehlgeschlagen: Ungültige Anmeldedaten";
 			return null;
 		}
+	}
+
+	public String redirectToUserStats() {
+		return "/userStatistics.xhtml?faces-redirect=true";
+	}
+	
+	public String redirectToChatStats() {
+		return "/chatStatistics.xhtml?faces-redirect=true";
 	}
 
 	public String getRegisterName() {
@@ -150,6 +158,5 @@ public class LoginRegisterBean implements Serializable {
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-	
 
 }

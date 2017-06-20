@@ -21,11 +21,11 @@ import de.hfu.chat.model.Message;
 @ManagedBean(name = "chatRepository")
 @ApplicationScoped
 public class ChatRepository {
-	
-	public ChatRepository(){
-		//default
+
+	public ChatRepository() {
+		// default
 	}
-	
+
 	public Chat createChat(String user1, String user2) {
 		String chatId = UUID.randomUUID().toString();
 		DatabaseReference user1Ref = FirebaseDatabase.getInstance().getReference("users/" + user1 + "/chats");
@@ -88,7 +88,6 @@ public class ChatRepository {
 								@Override
 								public void onDataChange(DataSnapshot snapshot) {
 									if (snapshot.exists()) {
-										System.out.println("snapshot LUL" + snapshot);
 										Iterable<DataSnapshot> children = snapshot.getChildren();
 										// there is only 1 message, but we still
 										// have to iterate due to the structure
@@ -130,8 +129,7 @@ public class ChatRepository {
 		return chats;
 	}
 
-	
-	//Helper Methods
+	// Helper Methods
 
 	private List<String> loadChatIds(String user) {
 		final List<String> chatIds = new ArrayList<>();
@@ -190,7 +188,7 @@ public class ChatRepository {
 				}
 				semaphore.release();
 			}
-	
+
 			@Override
 			public void onCancelled(DatabaseError err) {
 				System.out.println(err);
@@ -203,5 +201,5 @@ public class ChatRepository {
 		}
 		return messages;
 	}
-	
+
 }

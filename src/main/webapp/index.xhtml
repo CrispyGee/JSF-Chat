@@ -15,9 +15,24 @@
 <h:body bgcolor="white">
 	<b:panelGrid colSpans="4,4,4">
 		<div></div>
-		<h3>JSF Chat</h3>
+		<div>
+			<h3>JSF Chat</h3>
+		</div>
 		<div></div>
 	</b:panelGrid>
+
+	<b:panelGrid colSpans="2,4,4,2">
+		<div></div>
+		<b:form>
+			<b:commandButton value="Nutzer-Statistiken"
+				action="#{loginRegisterBean.redirectToUserStats}" look="primary"></b:commandButton>
+			<b:commandButton value="Chat-Statistiken"
+				action="#{loginRegisterBean.redirectToChatStats}" look="success"></b:commandButton>
+		</b:form>
+		<div></div>
+		<div></div>
+	</b:panelGrid>
+
 	<b:panelGrid colSpans="2,4,4,2">
 		<div></div>
 		<b:form>

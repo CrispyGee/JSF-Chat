@@ -20,7 +20,7 @@
 <h:body>
 	<h4>Eingeloggt als #{userOverviewBean.user.username}</h4>
 	<h:form>
-		<b:commandButton action="#{userOverviewBean.redirectToLogin()}"
+		<b:commandButton action="#{logoutBean.logout(userOverviewBean.user.username)}"
 			class="btn btn-danger icon-btn" href="#">
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
 		Logout
