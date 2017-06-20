@@ -13,14 +13,14 @@
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		crossorigin="anonymous" />
 	<f:metadata>
-		<f:viewAction action="#{chatSelectionBean.initChats}" />
+		<f:viewAction action="#{chatOverviewBean.initChats}" />
 	</f:metadata>
 	<title>JSF 2.0 Chat Application</title>
 </h:head>
 <h:body>
-	<h4>Eingeloggt als #{chatSelectionBean.user.username}</h4>
+	<h4>Eingeloggt als #{chatOverviewBean.user.username}</h4>
 	<h:form>
-		<b:commandButton action="#{chatSelectionBean.redirectToUserView()}"
+		<b:commandButton action="#{chatOverviewBean.redirectToUserView()}"
 			class="btn icon-btn btn-success" href="#">
 			<span
 				class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>
@@ -31,24 +31,24 @@
 			class="glyphicon btn-glyphicon glyphicon-share img-circle text-info"></span>
 			Neues Bild
 		</a>
-		<b:commandButton action="#{chatSelectionBean.redirectToLogin()}"
+		<b:commandButton action="#{chatOverviewBean.redirectToLogin()}"
 			class="btn btn-danger icon-btn" href="#">
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
 		Logout
 	</b:commandButton>
 	</h:form>
-	<ui:repeat value="#{chatSelectionBean.chats}" var="chat">
+	<ui:repeat value="#{chatOverviewBean.chats}" var="chat">
 		<b:panel>
 			<f:facet name="heading">
 				<i class="glyphicon glyphicon-envelope" style="padding-right: 20px" />
-				<h:outputText value="#{chatSelectionBean.otherUser(chat)}" />
+				<h:outputText value="#{chatOverviewBean.otherUser(chat)}" />
 			</f:facet>
-			<h:outputText value="#{chatSelectionBean.displayMessage(chat)}" />
+			<h:outputText value="#{chatOverviewBean.displayMessage(chat)}" />
 			<br />
-			<h:outputText value="#{chatSelectionBean.displayTimestamp(chat)}" />
+			<h:outputText value="#{chatOverviewBean.displayTimestamp(chat)}" />
 			<b:form>
 				<b:commandButton value="Gehe zum Chat"
-					action="#{chatSelectionBean.showChat(chat)}" look="primary"
+					action="#{chatOverviewBean.showChat(chat)}" look="primary"
 					style="float: right"></b:commandButton>
 			</b:form>
 		</b:panel>

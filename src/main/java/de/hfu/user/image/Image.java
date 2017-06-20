@@ -1,4 +1,4 @@
-package de.hfu.model;
+package de.hfu.user.image;
 
 /**
  * Created by IMTT on 12.04.2017.

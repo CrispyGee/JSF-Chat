@@ -1,4 +1,4 @@
-package de.hfu.presentation;
+package de.hfu.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,19 +8,23 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import de.hfu.model.Chat;
-import de.hfu.model.User;
-import de.hfu.services.FirebaseRepository;
+import de.hfu.chat.Chat;
+import de.hfu.chat.ChatRepository;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
-public class UserBean implements Serializable {
+public class UserOverviewBean implements Serializable {
 
 	private List<User> users;
 	private User user;
+	
+	private UserRepository userRepository;
+	private ChatRepository chatRepository;
 
 	public void initUsers() {
+		this.userRepository = new UserRepository();
+		this.chatRepository = new ChatRepository();
 		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
 		if (currentUser != null) {
 			this.user = currentUser;
@@ -28,12 +32,12 @@ public class UserBean implements Serializable {
 		List<String> filter = new ArrayList<>();
 		filter.add(this.user.getUsername());
 		filter.addAll(getChatPartners(user.getUsername()));
-		this.users = FirebaseRepository.getInstance().loadUserList(filter);
+		this.users = userRepository.loadUserList(filter);
 
 	}
 
 	private List<String> getChatPartners(String username) {
-		List<Chat> chats = FirebaseRepository.getInstance().loadChatList(username);
+		List<Chat> chats = chatRepository.loadChatList(username);
 		List<String> chatPartners = new ArrayList<>();
 		for (Chat chat : chats) {
 			chatPartners.add(getOtherUser(chat.getParticipants()));
@@ -51,12 +55,12 @@ public class UserBean implements Serializable {
 	}
 
 	public String startChat(User user) throws Exception {
-		Chat chat = FirebaseRepository.getInstance().createChat(this.user.getUsername(), user.getUsername());
+		Chat chat = chatRepository.createChat(this.user.getUsername(), user.getUsername());
 		// TODO fix this bs
 		Thread.sleep(1000);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", this.user);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("chat", chat);
-		return "/chat.xhtml?faces-redirect=true";
+		return "/chatRoom.xhtml?faces-redirect=true";
 	}
 
 	public String redirectToLogin() {

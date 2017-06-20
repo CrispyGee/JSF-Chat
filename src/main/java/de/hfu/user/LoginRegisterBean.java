@@ -1,4 +1,4 @@
-package de.hfu.presentation;
+package de.hfu.user;
 
 import java.io.Serializable;
 
@@ -7,8 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import de.hfu.model.User;
-import de.hfu.services.FirebaseRepository;
+import de.hfu.services.FirebaseConnector;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -29,7 +28,7 @@ public class LoginRegisterBean implements Serializable {
 	private String loginText;
 
 	// utility
-	private FirebaseRepository firebaseRepository;
+	private UserRepository userRepository;
 
 	/**
 	 * initializes Bean with necessary objects (nearly same as a constructor)
@@ -37,7 +36,8 @@ public class LoginRegisterBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		System.out.println("initializing LoginRegisterBean with init");
-		this.firebaseRepository = FirebaseRepository.getInstance();
+		FirebaseConnector.connect();
+		this.userRepository = new UserRepository();
 	}
 
 	public void initLogin() {
@@ -47,7 +47,7 @@ public class LoginRegisterBean implements Serializable {
 
 	public String register() throws Exception {
 		final User user = new User(firstname, lastname, registerName, registerPassword);
-		if (firebaseRepository.register(user)) {
+		if (userRepository.register(user)) {
 			this.setRegisterSuccess("Erfolgreich registriert!");
 			this.registerFail = null;
 		} else {
@@ -58,10 +58,10 @@ public class LoginRegisterBean implements Serializable {
 	}
 
 	public String login() {
-		User user = firebaseRepository.login(loginName, loginPassword);
+		User user = userRepository.login(loginName, loginPassword);
 		if (user.getUsername() != null) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
-			return "/chatoverview.xhtml?faces-redirect=true";
+			return "/chatOverview.xhtml?faces-redirect=true";
 		} else {
 			loginText = "Login fehlgeschlagen: Ungültige Anmeldedaten";
 			return null;

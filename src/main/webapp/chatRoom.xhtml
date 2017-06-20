@@ -13,21 +13,21 @@
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		crossorigin="anonymous" />
 	<f:metadata>
-		<f:viewParam name="username" value="#{messageBean.username}" />
-		<f:viewAction action="#{messageBean.initChatroom}" />
+		<f:viewParam name="username" value="#{chatRoomBean.username}" />
+		<f:viewAction action="#{chatRoomBean.initChatroom}" />
 	</f:metadata>
 	<title>JSF 2.0 Chat Application</title>
 </h:head>
 <h:body>
-	<h4>Eingeloggt als #{messageBean.username}</h4>
+	<h4>Eingeloggt als #{chatRoomBean.username}</h4>
 	<b:form>
-		<b:commandButton action="#{messageBean.redirectToLogin()}"
+		<b:commandButton action="#{chatRoomBean.redirectToLogin()}"
 			class="btn btn-danger icon-btn" href="#">
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
 		Logout
 	</b:commandButton>
 		<b:commandButton
-			action="#{messageBean.redirectToChatOverview()}"
+			action="#{chatRoomBean.redirectToChatOverview()}"
 			class="btn btn-primary icon-btn" href="#">
 			<span
 				class="glyphicon btn-glyphicon glyphicon-minus img-circle text-success"></span>
@@ -38,10 +38,10 @@
 
 			<b:carouselItem
 				style="width:900px; height:600px; overflow-y: auto; max-height: 600px">
-				<b:panel title="Chat mit #{messageBean.otherUsername}"
+				<b:panel title="Chat mit #{chatRoomBean.otherUsername}"
 					look="primary">
 					<h:panelGroup id="chat_messages">
-						<ui:repeat value="#{messageBean.chat.getMessages()}" var="message">
+						<ui:repeat value="#{chatRoomBean.chat.getMessages()}" var="message">
 							<div class="panel-body msg_container_base">
 								<div class="row msg_container base_sent">
 									<div class="col-md-10 col-xs-10">
@@ -57,7 +57,7 @@
 											src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
 											class=" img-responsive " />
 										<p>
-											#{message.sender} <br />#{messageBean.formatDate(message.timestamp)}<br />
+											#{message.sender} <br />#{chatRoomBean.formatDate(message.timestamp)}<br />
 										</p>
 									</div>
 
@@ -79,12 +79,12 @@
 		<div class="panel-footer" style="width: 900px;">
 			<div class="input-group">
 				<b:inputText id="input_txt" label=""
-					value="#{messageBean.messageContent}"
+					value="#{chatRoomBean.messageContent}"
 					placeholder="Nachricht eingeben..."
 					class="form-control input-sm chat_input" />
 				<span class="input-group-btn"> <b:commandButton
 						value="Senden" class="btn btn-primary btn-sm" ajax="true"
-						update="@form" actionListener="#{messageBean.send}" look="primary"></b:commandButton>
+						update="@form" actionListener="#{chatRoomBean.send}" look="primary"></b:commandButton>
 				</span>
 			</div>
 		</div>

@@ -1,4 +1,4 @@
-package de.hfu.presentation;
+package de.hfu.chat;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -17,14 +16,13 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-import de.hfu.model.Chat;
-import de.hfu.model.Message;
-import de.hfu.model.User;
-import de.hfu.services.FirebaseRepository;
+import de.hfu.chat.message.Message;
+import de.hfu.chat.message.MessageRepository;
+import de.hfu.user.User;
 
 @ManagedBean
 @SessionScoped
-public class MessageBean implements Serializable {
+public class ChatRoomBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +34,9 @@ public class MessageBean implements Serializable {
 	private String otherUsername;
 
 	public void receiveMessages() {
-		FirebaseRepository.getInstance().onReceiveMessage(this.chat.getId(), new ChildEventListener() {
+		
+		MessageRepository messageRepo = new MessageRepository();
+		messageRepo.onReceiveMessage(this.chat.getId(), new ChildEventListener() {
 
 			@Override
 			public void onChildRemoved(DataSnapshot arg0) {
@@ -85,7 +85,8 @@ public class MessageBean implements Serializable {
 		if (previousChat.equals(currentChat.getId())) {
 			// do nothing is this case, since this chat is already loaded
 		} else {
-			this.chat = FirebaseRepository.getInstance().loadChat(currentChat.getId());
+			ChatRepository chatRepo = new ChatRepository();
+			this.chat = chatRepo.loadChat(currentChat.getId());
 			if (messageReceive.get(currentChat.getId()) == null || !messageReceive.get(currentChat.getId())) {
 				this.chat.setMessages(new ArrayList<Message>());
 				receiveMessages();
@@ -103,7 +104,8 @@ public class MessageBean implements Serializable {
 	 */
 	public void send(ActionEvent e) {
 		System.out.println("sending message");
-		FirebaseRepository.getInstance().sendMessage(this.chat.getId(), this.messageContent, this.user.getUsername());
+		MessageRepository messageRepo = new MessageRepository();
+		messageRepo.sendMessage(this.chat.getId(), this.messageContent, this.user.getUsername());
 		this.messageContent = "";
 	}
 
@@ -146,7 +148,7 @@ public class MessageBean implements Serializable {
 
 	public String redirectToChatOverview() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
-		return "/chatoverview.xhtml?faces-redirect=true";
+		return "/chatOverview.xhtml?faces-redirect=true";
 	}
 
 	public String redirectToLogin() {

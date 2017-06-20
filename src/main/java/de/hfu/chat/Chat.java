@@ -1,7 +1,9 @@
-package de.hfu.model;
+package de.hfu.chat;
 
 import java.io.Serializable;
 import java.util.List;
+
+import de.hfu.chat.message.Message;
 
 /**
  * Created by IMTT on 12.04.2017.

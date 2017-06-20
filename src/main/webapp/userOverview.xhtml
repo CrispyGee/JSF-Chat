@@ -13,27 +13,27 @@
 		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 		crossorigin="anonymous" />
 	<f:metadata>
-		<f:viewAction action="#{userBean.initUsers}" />
+		<f:viewAction action="#{userOverviewBean.initUsers}" />
 	</f:metadata>
 	<title>JSF 2.0 Chat Application</title>
 </h:head>
 <h:body>
-	<h4>Eingeloggt als #{userBean.user.username}</h4>
+	<h4>Eingeloggt als #{userOverviewBean.user.username}</h4>
 	<h:form>
-		<b:commandButton action="#{userBean.redirectToLogin()}"
+		<b:commandButton action="#{userOverviewBean.redirectToLogin()}"
 			class="btn btn-danger icon-btn" href="#">
 			<span class="glyphicon glyphicon-minus btn-glyphicon img-circle"></span>
 		Logout
 		</b:commandButton>
 		<b:commandButton
-			action="#{chatSelectionBean.redirectToChatOverview()}"
+			action="#{chatOverviewBean.redirectToChatOverview()}"
 			class="btn btn-primary icon-btn" href="#">
 			<span
 				class="glyphicon btn-glyphicon glyphicon-minus img-circle text-success"></span>
 		zurück
 	</b:commandButton>
 	</h:form>
-	<ui:repeat value="#{userBean.users}" var="user">
+	<ui:repeat value="#{userOverviewBean.users}" var="user">
 		<b:panel>
 			<f:facet name="heading">
 				<span
@@ -43,7 +43,7 @@
 			<div>Vorname: #{user.firstname}</div>
 			<div>Nachname: #{user.lastname}</div>
 			<h:form>
-				<b:commandButton action="#{userBean.startChat(user)}"
+				<b:commandButton action="#{userOverviewBean.startChat(user)}"
 					class="btn icon-btn btn-success" href="#" style="float: right">
 					<span
 						class="glyphicon btn-glyphicon glyphicon-plus img-circle text-success"></span>

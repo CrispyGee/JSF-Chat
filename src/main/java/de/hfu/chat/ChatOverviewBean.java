@@ -1,4 +1,4 @@
-package de.hfu.presentation;
+package de.hfu.chat;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -8,24 +8,24 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import de.hfu.model.Chat;
-import de.hfu.model.User;
-import de.hfu.services.FirebaseRepository;
+import de.hfu.user.User;
 
 @SuppressWarnings("serial")
 @ManagedBean
 @SessionScoped
-public class ChatSelectionBean implements Serializable {
+public class ChatOverviewBean implements Serializable {
+	
 	private User user;
 	private List<Chat> chats;
 
 	public void initChats() {
-		System.out.println("initializing ChatSelectionBean with init");
+		System.out.println("initializing ChatOverviewBean with init");
 		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
 		if (currentUser != null) {
 			this.user = currentUser;
 		}
-		this.chats = FirebaseRepository.getInstance().loadChatList(this.user.getUsername());
+		ChatRepository chatRepo = new ChatRepository();
+		this.chats = chatRepo.loadChatList(this.user.getUsername());
 	}
 
 	public String displayMessage(Chat chat) {
@@ -54,7 +54,7 @@ public class ChatSelectionBean implements Serializable {
 
 	public String redirectToUserView() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
-		return "/users.xhtml?faces-redirect=true";
+		return "/userOverview.xhtml?faces-redirect=true";
 	}
 
 	public String redirectToLogin() {
@@ -63,16 +63,16 @@ public class ChatSelectionBean implements Serializable {
 
 	public String redirectToChatOverview() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
-		return "/chatoverview.xhtml?faces-redirect=true";
+		return "/chatOverview.xhtml?faces-redirect=true";
 	}
 	
 	public String showChat(Chat chat) {
 		System.out.println("______________________________-");
 		System.out.println(this.user);
-		System.out.println("chat " + chat);
+		System.out.println(chat);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", this.user);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("chat", chat);
-		return "/chat.xhtml?faces-redirect=true";
+		return "/chatRoom.xhtml?faces-redirect=true";
 	}
 
 	public List<Chat> getChats() {
