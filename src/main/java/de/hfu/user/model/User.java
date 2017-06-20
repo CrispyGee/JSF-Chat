@@ -1,9 +1,9 @@
-package de.hfu.user;
+package de.hfu.user.model;
 
 import java.io.Serializable;
 import java.util.List;
 
-import de.hfu.chat.Chat;
+import de.hfu.chat.model.Chat;
 
 /**
  * Created by IMTT on 12.04.2017.
@@ -15,15 +15,17 @@ public class User implements Serializable {
 	private String lastname;
 	private String username;
 	private String password;
+	private long timestamp;
 	private OnlineState onlineState;
 	private List<Chat> openChats;
 
 	public User() {
-
+		this.timestamp = System.currentTimeMillis();
 	}
 
 	public User(String firstname, String lastname, String username, String password) {
 		super();
+		this.timestamp = System.currentTimeMillis();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
@@ -84,4 +86,12 @@ public class User implements Serializable {
 				+ password + ", onlineState=" + onlineState + ", openChats=" + openChats + "]";
 	}
 
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+	
 }

@@ -1,4 +1,4 @@
-package de.hfu.chat.message;
+package de.hfu.chat.model;
 
 /**
  * Created by IMTT on 12.04.2017.

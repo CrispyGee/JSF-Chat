@@ -1,14 +1,17 @@
-package de.hfu.chat;
+package de.hfu.chat.business;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import de.hfu.user.User;
+import de.hfu.chat.model.Chat;
+import de.hfu.chat.persistence.ChatRepository;
+import de.hfu.user.model.User;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -17,6 +20,9 @@ public class ChatOverviewBean implements Serializable {
 	
 	private User user;
 	private List<Chat> chats;
+	
+	@ManagedProperty(value="#{chatRepository}")
+	private ChatRepository chatRepository;
 
 	public void initChats() {
 		System.out.println("initializing ChatOverviewBean with init");
@@ -24,8 +30,7 @@ public class ChatOverviewBean implements Serializable {
 		if (currentUser != null) {
 			this.user = currentUser;
 		}
-		ChatRepository chatRepo = new ChatRepository();
-		this.chats = chatRepo.loadChatList(this.user.getUsername());
+		this.chats = this.chatRepository.loadChatList(this.user.getUsername());
 	}
 
 	public String displayMessage(Chat chat) {
@@ -90,4 +95,13 @@ public class ChatOverviewBean implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public ChatRepository getChatRepository() {
+		return chatRepository;
+	}
+
+	public void setChatRepository(ChatRepository chatRepository) {
+		this.chatRepository = chatRepository;
+	}
+	
 }

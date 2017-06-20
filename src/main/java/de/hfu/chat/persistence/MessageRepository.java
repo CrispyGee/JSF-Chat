@@ -1,10 +1,22 @@
-package de.hfu.chat.message;
+package de.hfu.chat.persistence;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import de.hfu.chat.model.Message;
+
+
+@ManagedBean(name = "messageRepository")
+@ApplicationScoped
 public class MessageRepository {
+	
+	public MessageRepository(){
+		//default
+	}
 	
 	public boolean sendMessage(String chatId, String content, String sender) {
 		Message message = new Message();

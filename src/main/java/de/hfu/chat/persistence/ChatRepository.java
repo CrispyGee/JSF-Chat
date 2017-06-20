@@ -1,4 +1,4 @@
-package de.hfu.chat;
+package de.hfu.chat.persistence;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -6,16 +6,25 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.Semaphore;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import de.hfu.chat.message.Message;
+import de.hfu.chat.model.Chat;
+import de.hfu.chat.model.Message;
 
+@ManagedBean(name = "chatRepository")
+@ApplicationScoped
 public class ChatRepository {
 	
+	public ChatRepository(){
+		//default
+	}
 	
 	public Chat createChat(String user1, String user2) {
 		String chatId = UUID.randomUUID().toString();

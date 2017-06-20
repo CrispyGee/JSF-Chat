@@ -1,13 +1,16 @@
-package de.hfu.user;
+package de.hfu.user.business;
 
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import de.hfu.services.FirebaseConnector;
+import de.hfu.user.model.User;
+import de.hfu.user.persistence.UserRepository;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -28,6 +31,7 @@ public class LoginRegisterBean implements Serializable {
 	private String loginText;
 
 	// utility
+	@ManagedProperty(value="#{userRepository}")
 	private UserRepository userRepository;
 
 	/**
@@ -37,7 +41,6 @@ public class LoginRegisterBean implements Serializable {
 	public void init() {
 		System.out.println("initializing LoginRegisterBean with init");
 		FirebaseConnector.connect();
-		this.userRepository = new UserRepository();
 	}
 
 	public void initLogin() {
@@ -139,5 +142,14 @@ public class LoginRegisterBean implements Serializable {
 	public void setRegisterSuccess(String registerSuccess) {
 		this.registerSuccess = registerSuccess;
 	}
+
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+	
 
 }

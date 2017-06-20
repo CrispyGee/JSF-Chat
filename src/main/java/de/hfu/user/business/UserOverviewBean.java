@@ -1,15 +1,18 @@
-package de.hfu.user;
+package de.hfu.user.business;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
-import de.hfu.chat.Chat;
-import de.hfu.chat.ChatRepository;
+import de.hfu.chat.model.Chat;
+import de.hfu.chat.persistence.ChatRepository;
+import de.hfu.user.model.User;
+import de.hfu.user.persistence.UserRepository;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -19,7 +22,10 @@ public class UserOverviewBean implements Serializable {
 	private List<User> users;
 	private User user;
 	
+	@ManagedProperty(value="#{userRepository}")
 	private UserRepository userRepository;
+
+	@ManagedProperty(value="#{chatRepository}")
 	private ChatRepository chatRepository;
 
 	public void initUsers() {
@@ -83,4 +89,20 @@ public class UserOverviewBean implements Serializable {
 		this.user = user;
 	}
 
+	public UserRepository getUserRepository() {
+		return userRepository;
+	}
+
+	public void setUserRepository(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	public ChatRepository getChatRepository() {
+		return chatRepository;
+	}
+
+	public void setChatRepository(ChatRepository chatRepository) {
+		this.chatRepository = chatRepository;
+	}
+	
 }

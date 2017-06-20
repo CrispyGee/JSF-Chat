@@ -1,8 +1,11 @@
-package de.hfu.user;
+package de.hfu.user.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -10,7 +13,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import de.hfu.user.model.User;
+
+@ManagedBean(name = "userRepository")
+@ApplicationScoped
 public class UserRepository {
+	
+	public UserRepository(){
+		//default
+	}
 	
 	public User login(String username, final String password) {
 		final Semaphore semaphore = new Semaphore(0);

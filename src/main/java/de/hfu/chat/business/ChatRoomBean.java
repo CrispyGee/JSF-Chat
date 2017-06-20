@@ -1,4 +1,4 @@
-package de.hfu.chat;
+package de.hfu.chat.business;
 
 import java.io.Serializable;
 
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -17,12 +18,13 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 
-import de.hfu.chat.message.Message;
-import de.hfu.chat.message.MessageRepository;
-import de.hfu.user.User;
+import de.hfu.chat.model.Chat;
+import de.hfu.chat.model.Message;
+import de.hfu.chat.persistence.ChatRepository;
+import de.hfu.chat.persistence.MessageRepository;
+import de.hfu.user.model.User;
 
 
-//user.model, chat.model etc
 @ManagedBean
 @SessionScoped
 public class ChatRoomBean implements Serializable {
@@ -35,11 +37,17 @@ public class ChatRoomBean implements Serializable {
 	private Chat chat;
 	private Map<String, Boolean> messageReceive;
 	private String otherUsername;
+	
+	@ManagedProperty(value="#{messageRepository}")
+	private MessageRepository messageRepository;
+	
+	@ManagedProperty(value="#{chatRepository}")
+	private ChatRepository chatRepository;
+
 
 	public void receiveMessages() {
 		
-		MessageRepository messageRepo = new MessageRepository();
-		messageRepo.onReceiveMessage(this.chat.getId(), new ChildEventListener() {
+		messageRepository.onReceiveMessage(this.chat.getId(), new ChildEventListener() {
 
 			@Override
 			public void onChildRemoved(DataSnapshot arg0) {
@@ -88,8 +96,7 @@ public class ChatRoomBean implements Serializable {
 		if (previousChat.equals(currentChat.getId())) {
 			// do nothing is this case, since this chat is already loaded
 		} else {
-			ChatRepository chatRepo = new ChatRepository();
-			this.chat = chatRepo.loadChat(currentChat.getId());
+			this.chat = chatRepository.loadChat(currentChat.getId());
 			if (messageReceive.get(currentChat.getId()) == null || !messageReceive.get(currentChat.getId())) {
 				this.chat.setMessages(new ArrayList<Message>());
 				receiveMessages();
@@ -166,5 +173,23 @@ public class ChatRoomBean implements Serializable {
 		}
 		return "";
 	}
+
+	public MessageRepository getMessageRepository() {
+		return messageRepository;
+	}
+
+	public void setMessageRepository(MessageRepository messageRepository) {
+		this.messageRepository = messageRepository;
+	}
+
+	public ChatRepository getChatRepository() {
+		return chatRepository;
+	}
+
+	public void setChatRepository(ChatRepository chatRepository) {
+		this.chatRepository = chatRepository;
+	}
+	
+	
 
 }
