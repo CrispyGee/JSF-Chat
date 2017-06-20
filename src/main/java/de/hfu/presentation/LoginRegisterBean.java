@@ -8,7 +8,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import de.hfu.model.User;
-import de.hfu.util.FirebaseStarter;
+import de.hfu.services.FirebaseRepository;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -29,7 +29,7 @@ public class LoginRegisterBean implements Serializable {
 	private String loginText;
 
 	// utility
-	private FirebaseStarter firebaseStarter;
+	private FirebaseRepository firebaseRepository;
 
 	/**
 	 * initializes Bean with necessary objects (nearly same as a constructor)
@@ -37,7 +37,7 @@ public class LoginRegisterBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		System.out.println("initializing LoginRegisterBean with init");
-		this.firebaseStarter = FirebaseStarter.getInstance();
+		this.firebaseRepository = FirebaseRepository.getInstance();
 	}
 
 	public void initLogin() {
@@ -47,7 +47,7 @@ public class LoginRegisterBean implements Serializable {
 
 	public String register() throws Exception {
 		final User user = new User(firstname, lastname, registerName, registerPassword);
-		if (firebaseStarter.register(user)) {
+		if (firebaseRepository.register(user)) {
 			this.setRegisterSuccess("Erfolgreich registriert!");
 			this.registerFail = null;
 		} else {
@@ -58,7 +58,7 @@ public class LoginRegisterBean implements Serializable {
 	}
 
 	public String login() {
-		User user = firebaseStarter.login(loginName, loginPassword);
+		User user = firebaseRepository.login(loginName, loginPassword);
 		if (user.getUsername() != null) {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", user);
 			return "/chatoverview.xhtml?faces-redirect=true";

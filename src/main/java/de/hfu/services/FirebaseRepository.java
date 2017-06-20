@@ -1,4 +1,4 @@
-package de.hfu.util;
+package de.hfu.services;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,18 +22,18 @@ import de.hfu.model.Chat;
 import de.hfu.model.Message;
 import de.hfu.model.User;
 
-public class FirebaseStarter {
+public class FirebaseRepository {
 
-	private static FirebaseStarter singleton;
+	private static FirebaseRepository singleton;
 
-	public static FirebaseStarter getInstance() {
+	public static FirebaseRepository getInstance() {
 		if (singleton == null) {
-			FirebaseStarter.singleton = new FirebaseStarter();
+			FirebaseRepository.singleton = new FirebaseRepository();
 		}
 		return singleton;
 	}
 
-	private FirebaseStarter() {
+	private FirebaseRepository() {
 		FileInputStream serviceAccount;
 		try {
 			serviceAccount = new FileInputStream(
@@ -336,7 +336,7 @@ public class FirebaseStarter {
 	}
 
 	public static void main(String[] args) throws Exception {
-		FirebaseStarter fb = new FirebaseStarter();
+		FirebaseRepository fb = new FirebaseRepository();
 		fb.register(new User("Nicock", "Nicock", "Nicock", "Nicock"));
 		// fb.register(new User("b", "b", "b", "b"));
 		// fb.register(new User("c", "c", "c", "c"));

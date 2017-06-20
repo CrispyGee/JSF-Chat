@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import de.hfu.model.Chat;
 import de.hfu.model.Message;
 import de.hfu.model.User;
-import de.hfu.util.FirebaseStarter;
+import de.hfu.services.FirebaseRepository;
 
 @ManagedBean
 @SessionScoped
@@ -36,7 +36,7 @@ public class MessageBean implements Serializable {
 	private String otherUsername;
 
 	public void receiveMessages() {
-		FirebaseStarter.getInstance().onReceiveMessage(this.chat.getId(), new ChildEventListener() {
+		FirebaseRepository.getInstance().onReceiveMessage(this.chat.getId(), new ChildEventListener() {
 
 			@Override
 			public void onChildRemoved(DataSnapshot arg0) {
@@ -85,7 +85,7 @@ public class MessageBean implements Serializable {
 		if (previousChat.equals(currentChat.getId())) {
 			// do nothing is this case, since this chat is already loaded
 		} else {
-			this.chat = FirebaseStarter.getInstance().loadChat(currentChat.getId());
+			this.chat = FirebaseRepository.getInstance().loadChat(currentChat.getId());
 			if (messageReceive.get(currentChat.getId()) == null || !messageReceive.get(currentChat.getId())) {
 				this.chat.setMessages(new ArrayList<Message>());
 				receiveMessages();
@@ -103,7 +103,7 @@ public class MessageBean implements Serializable {
 	 */
 	public void send(ActionEvent e) {
 		System.out.println("sending message");
-		FirebaseStarter.getInstance().sendMessage(this.chat.getId(), this.messageContent, this.user.getUsername());
+		FirebaseRepository.getInstance().sendMessage(this.chat.getId(), this.messageContent, this.user.getUsername());
 		this.messageContent = "";
 	}
 
