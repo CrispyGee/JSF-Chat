@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
 
 import de.hfu.model.Chat;
 import de.hfu.model.User;
-import de.hfu.util.FirebaseStarter;
+import de.hfu.services.FirebaseRepository;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -25,7 +25,7 @@ public class ChatSelectionBean implements Serializable {
 		if (currentUser != null) {
 			this.user = currentUser;
 		}
-		this.chats = FirebaseStarter.getInstance().loadChatList(this.user.getUsername());
+		this.chats = FirebaseRepository.getInstance().loadChatList(this.user.getUsername());
 	}
 
 	public String displayMessage(Chat chat) {

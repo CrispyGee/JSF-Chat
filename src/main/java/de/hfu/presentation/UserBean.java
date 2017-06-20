@@ -10,7 +10,7 @@ import javax.faces.context.FacesContext;
 
 import de.hfu.model.Chat;
 import de.hfu.model.User;
-import de.hfu.util.FirebaseStarter;
+import de.hfu.services.FirebaseRepository;
 
 @SuppressWarnings("serial")
 @ManagedBean
@@ -28,12 +28,12 @@ public class UserBean implements Serializable {
 		List<String> filter = new ArrayList<>();
 		filter.add(this.user.getUsername());
 		filter.addAll(getChatPartners(user.getUsername()));
-		this.users = FirebaseStarter.getInstance().loadUserList(filter);
+		this.users = FirebaseRepository.getInstance().loadUserList(filter);
 
 	}
 
 	private List<String> getChatPartners(String username) {
-		List<Chat> chats = FirebaseStarter.getInstance().loadChatList(username);
+		List<Chat> chats = FirebaseRepository.getInstance().loadChatList(username);
 		List<String> chatPartners = new ArrayList<>();
 		for (Chat chat : chats) {
 			chatPartners.add(getOtherUser(chat.getParticipants()));
@@ -51,7 +51,7 @@ public class UserBean implements Serializable {
 	}
 
 	public String startChat(User user) throws Exception {
-		Chat chat = FirebaseStarter.getInstance().createChat(this.user.getUsername(), user.getUsername());
+		Chat chat = FirebaseRepository.getInstance().createChat(this.user.getUsername(), user.getUsername());
 		// TODO fix this bs
 		Thread.sleep(1000);
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("user", this.user);
