@@ -43,6 +43,8 @@ public class LoginRegisterBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		System.out.println("initializing LoginRegisterBean with init");
+		//TODO : statische variable erstellen, connection darf nur einmal hergestellt werden
+		
 		FirebaseConnector.connect();
 	}
 

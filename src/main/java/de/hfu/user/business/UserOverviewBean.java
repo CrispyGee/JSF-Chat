@@ -1,5 +1,6 @@
 package de.hfu.user.business;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import de.hfu.chat.model.Chat;
 import de.hfu.chat.persistence.ChatRepository;
@@ -31,9 +33,18 @@ public class UserOverviewBean implements Serializable {
 	public void initUsers() {
 		this.userRepository = new UserRepository();
 		this.chatRepository = new ChatRepository();
-		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		User currentUser = (User) session.getAttribute("user");
+
 		if (currentUser != null) {
 			this.user = currentUser;
+		} else {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		List<String> filter = new ArrayList<>();
 		filter.add(this.user.getUsername());

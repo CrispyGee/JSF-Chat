@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 
 import de.hfu.chat.model.Chat;
 import de.hfu.chat.persistence.ChatRepository;
-import de.hfu.services.Utils;
 import de.hfu.user.model.User;
 
 @SuppressWarnings("serial")

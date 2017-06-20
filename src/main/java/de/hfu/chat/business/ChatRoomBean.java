@@ -1,5 +1,6 @@
 package de.hfu.chat.business;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.text.SimpleDateFormat;
@@ -84,9 +85,18 @@ public class ChatRoomBean implements Serializable {
 			messageReceive = new HashMap<>();
 		}
 		this.messageContent = "";
-		User currentUser = ((User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user"));
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+		User currentUser = (User) session.getAttribute("user");
 		if (currentUser != null) {
 			this.user = currentUser;
+		}
+		else {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		this.username = this.user.getUsername();
 		Chat currentChat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
