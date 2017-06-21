@@ -66,6 +66,8 @@ public class ChatStatisticsBean {
 			cal.setTime(new Date());
 			int currentMonth = cal.get(Calendar.MONTH) + 1;
 			if (month == currentMonth) {
+				System.out.println(message);
+				System.out.println(day);
 				Integer current = monthMessages.get(day);
 				if (current == null) {
 					monthMessages.put(day, 1);

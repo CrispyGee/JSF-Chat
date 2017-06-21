@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import de.hfu.chat.model.Chat;
 import de.hfu.chat.persistence.ChatRepository;
+import de.hfu.services.SessionBean;
 import de.hfu.user.model.User;
 
 @SuppressWarnings("serial")
@@ -26,26 +27,14 @@ public class ChatOverviewBean implements Serializable {
 
 	@ManagedProperty(value = "#{chatRepository}")
 	private ChatRepository chatRepository;
+	
+	@ManagedProperty(value = "#{sessionBean}")
+	private SessionBean sessionBean;
+	
 
 	public void initChats() {
 		System.out.println("initializing ChatOverviewBean with init");
-
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		User currentUser = (User) session.getAttribute("user");
-
-//		 User currentUser = (User)
-//		 FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
-		if (currentUser != null) {
-			this.user = currentUser;
-		} else {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		this.user = sessionBean.getSessionUser();
 		this.chats = this.chatRepository.loadChatList(this.user.getUsername());
 	}
 
@@ -115,5 +104,15 @@ public class ChatOverviewBean implements Serializable {
 	public void setChatRepository(ChatRepository chatRepository) {
 		this.chatRepository = chatRepository;
 	}
+
+	public SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
+	}
+	
+	
 
 }
