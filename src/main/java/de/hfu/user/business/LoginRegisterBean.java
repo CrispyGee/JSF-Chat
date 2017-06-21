@@ -97,7 +97,7 @@ public class LoginRegisterBean implements Serializable {
 	public void setRegisterName(String username) {
 		this.registerName = username;
 	}
-
+	@Size(min=3,message="Min 3 characters")
 	public String getRegisterPassword() {
 		return registerPassword;
 	}
@@ -105,7 +105,7 @@ public class LoginRegisterBean implements Serializable {
 	public void setRegisterPassword(String password) {
 		this.registerPassword = password;
 	}
-
+	@Size(min=3, max=10, message="Min 3 and max 10 characters")
 	public String getLastname() {
 		return lastname;
 	}
@@ -113,7 +113,7 @@ public class LoginRegisterBean implements Serializable {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-
+	@Size(min=3, max=10, message="Min 3 and max 10 characters")
 	public String getFirstname() {
 		return firstname;
 	}
