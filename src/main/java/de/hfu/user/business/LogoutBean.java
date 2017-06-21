@@ -3,9 +3,8 @@ package de.hfu.user.business;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
+import de.hfu.services.SessionBean;
 import de.hfu.user.persistence.UserRepository;
 
 @ManagedBean
@@ -14,14 +13,15 @@ public class LogoutBean {
 
 	@ManagedProperty(value = "#{userRepository}")
 	private UserRepository userRepository;
+	
+	@ManagedProperty(value = "#{sessionBean}")
+	private SessionBean sessionBean;
 
 	public String logout(String username) {
 		if (username != "") {
 			userRepository.logout(username);
 		}
-//		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		//session.invalidate();
-//		session.setAttribute("user", "");
+		sessionBean.killSession();
 		return "/index.xhtml?faces-redirect=true";
 	}
 
@@ -35,6 +35,14 @@ public class LogoutBean {
 
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;
+	}
+
+	public SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
 	}
 
 }

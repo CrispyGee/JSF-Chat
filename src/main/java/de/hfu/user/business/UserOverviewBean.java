@@ -1,6 +1,5 @@
 package de.hfu.user.business;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
 import de.hfu.chat.model.Chat;
 import de.hfu.chat.persistence.ChatRepository;
+import de.hfu.services.SessionBean;
 import de.hfu.user.model.User;
 import de.hfu.user.persistence.UserRepository;
 
@@ -29,26 +28,15 @@ public class UserOverviewBean implements Serializable {
 
 	@ManagedProperty(value = "#{chatRepository}")
 	private ChatRepository chatRepository;
+	
+	@ManagedProperty(value = "#{sessionBean}")
+	private SessionBean sessionBean;
+	
 
 	public void initUsers() {
 		this.userRepository = new UserRepository();
 		this.chatRepository = new ChatRepository();
-		 HttpSession session = (HttpSession)
-		 FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		 User currentUser = (User) session.getAttribute("user");
-
-//		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
-
-		if (currentUser != null) {
-			this.user = currentUser;
-		} else {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		this.user = sessionBean.getSessionUser();
 		List<String> filter = new ArrayList<>();
 		filter.add(this.user.getUsername());
 		filter.addAll(getChatPartners(user.getUsername()));
@@ -114,5 +102,15 @@ public class UserOverviewBean implements Serializable {
 	public void setChatRepository(ChatRepository chatRepository) {
 		this.chatRepository = chatRepository;
 	}
+
+	public SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
+	}
+	
+	
 
 }

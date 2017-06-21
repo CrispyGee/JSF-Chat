@@ -23,6 +23,7 @@ import de.hfu.chat.model.Chat;
 import de.hfu.chat.model.Message;
 import de.hfu.chat.persistence.ChatRepository;
 import de.hfu.chat.persistence.MessageRepository;
+import de.hfu.services.SessionBean;
 import de.hfu.user.model.User;
 
 @ManagedBean
@@ -43,6 +44,10 @@ public class ChatRoomBean implements Serializable {
 
 	@ManagedProperty(value = "#{chatRepository}")
 	private ChatRepository chatRepository;
+	
+	@ManagedProperty(value = "#{sessionBean}")
+	private SessionBean sessionBean;
+	
 
 	public void receiveMessages() {
 
@@ -82,22 +87,7 @@ public class ChatRoomBean implements Serializable {
 			messageReceive = new HashMap<>();
 		}
 		this.messageContent = "";
-
-//		User currentUser = (User) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("user");
-
-		 HttpSession session = (HttpSession)
-		 FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-		 User currentUser = (User) session.getAttribute("user");
-		if (currentUser != null) {
-			this.user = currentUser;
-		} else {
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml?faces-redirect=true");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		this.user = sessionBean.getSessionUser();
 		this.username = this.user.getUsername();
 		Chat currentChat = (Chat) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("chat");
 		String previousChat = "";
@@ -191,5 +181,15 @@ public class ChatRoomBean implements Serializable {
 	public void setChatRepository(ChatRepository chatRepository) {
 		this.chatRepository = chatRepository;
 	}
+
+	public SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
+	}
+	
+	
 
 }
