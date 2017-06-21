@@ -36,7 +36,7 @@ public class SessionBean {
 	public void killSession() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 //		session.invalidate();
-		session.setAttribute("user", "");
+		session.setAttribute("user", null);
 	}
 
 }

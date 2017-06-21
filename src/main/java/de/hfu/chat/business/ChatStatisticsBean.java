@@ -35,6 +35,7 @@ public class ChatStatisticsBean {
 	public void initChats() {
 		System.out.println("initing chatStatisticsBean");
 		this.messages = messageRepository.loadAllMessages();
+		System.out.println(this.messages);
 		createLineModel();
 	}
 
@@ -46,6 +47,9 @@ public class ChatStatisticsBean {
 
 		Axis xAxis = lineModel.getAxis(AxisType.X);
 		xAxis.setLabel("Datum");
+		xAxis.setMax(31);
+		xAxis.setMin(0);
+		xAxis.setTickCount(31);
 
 		Axis yAxis = lineModel.getAxis(AxisType.Y);
 		yAxis.setLabel("Anzahl");
