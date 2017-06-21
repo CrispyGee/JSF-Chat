@@ -42,14 +42,15 @@ public class ChatStatisticsBean {
 	private void createLineModel() {
 		initLineModel();
 		// initTestModel();
-		lineModel.setTitle("Nachrichten diesen Monat");
+		String date = dateFormatBean.formatSemi(new Date().getTime());
+		lineModel.setTitle("Nachrichten diesen Monat (" + date + ")");
 		lineModel.setLegendPosition("ne");
 
 		Axis xAxis = lineModel.getAxis(AxisType.X);
 		xAxis.setLabel("Datum");
 		xAxis.setMax(31);
 		xAxis.setMin(0);
-		xAxis.setTickCount(31);
+		xAxis.setTickCount(32);
 
 		Axis yAxis = lineModel.getAxis(AxisType.Y);
 		yAxis.setLabel("Anzahl");

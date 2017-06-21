@@ -1,8 +1,6 @@
 package de.hfu.user.business;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.faces.bean.ApplicationScoped;
